@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-2"><strong>ID</strong></div>
+    <div class="col-md-9">{{ result.id }}</div>
+</div>
+<div class="row">
+    <div class="col-md-2"><strong>Submit time</strong></div>
+    <div class="col-md-9">{{ result.submit_time | replace("T", " ")}}</div>
+</div>
+<div class="row">
+    <div class="col-md-2"><strong>Testcase</strong></div>
+    <div class="col-md-9"><a href="{{ url_for('main.testcase', testcase_name=result.testcase.href.split('/')[-1]) }}">{{ result.testcase.name }}</a></div>
+</div>
+<div class="row">
+    <div class="col-md-2"><strong>Outcome</strong></div>
+    <div class="col-md-9">{{ result.outcome }}</div>
+</div>
+<div class="row">
+    <div class="col-md-2"><strong>Summary</strong></div>
+    <div class="col-md-9">{{ result.summary }}</div>
+</div>
+<div class="row">
+    <div class="col-md-2"><strong>Job</strong></div>
+    <div class="col-md-9"><a href="{{ url_for('main.job', job_id=result.job_url.split('/')[-1]) }}">Job</a></div>
+</div>
+<div class="row">
+    <div class="col-md-12">&nbsp;</div>
+</div>
+
+{% for key in result.result_data %}
+<div class="row">
+    <div class="col-md-2"><strong>{{key}}</strong></div>
+    <div class="col-md-9">{{', '.join(result.result_data[key])}}</div>
+</div>
+{% endfor %}
+
+
+{% endblock %}

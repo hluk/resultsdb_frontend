@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Results</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for testcase in testcases.data %}
+      <tr>
+        <td>{{ testcase.name }}</td>
+        <td><a href="{{ url_for('main.results', testcase_name = testcase.name) }}">Results</a></td>
+        <td><a href="{{ testcase.url }}">Ref &rarr;</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+<ul class="pager">
+  {% if testcases.prev %}
+    <li class="previous"><a href="{{ url_for('main.testcases') }}?{{ testcases.prev.split('?')[-1] }}">&larr; Previous</a></li>
+  {% endif %}
+  {% if testcases.next %}
+    <li class="next"><a href="{{ url_for('main.testcases') }}?{{ testcases.next.split('?')[-1] }}">Next &rarr;</a></li>
+  {% endif %}
+</ul>
+
+
+{% endblock %}

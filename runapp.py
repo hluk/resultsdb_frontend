@@ -33,5 +33,5 @@ if __name__ == '__main__':
     if not (os.getenv('TEST') == 'true' or os.getenv('PROD') == 'true'):
         os.environ['DEV'] = 'true'
 
-    resultsdb_frontend.app.run(host = resultsdb_frontend.app.config['RUN_HOST'], port = resultsdb_frontend.app.config['RUN_PORT'], debug = True)
+    resultsdb_frontend.app.run(host = '0.0.0.0', port = 5001, debug = True)
 
