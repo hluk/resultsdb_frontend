@@ -9,4 +9,4 @@ execfile(activate_this, dict(__file__=activate_this))
 import sys
 sys.path.insert(0,"/usr/share/resultsdb_frontend/")
 
-from resultsdb import app as application
+from resultsdb_frontend import app as application
