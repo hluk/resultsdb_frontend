@@ -18,6 +18,7 @@ setup(name='resultsdb_frontend',
         'WTForms>1.0',
         'Flask-WTF==0.8',
         'Flask-Login>=0.1.3',
+        'resultsdb_api',
      ]
      )
 
