@@ -5,4 +5,4 @@ ResultsDB fronted is a simple application that allows browsing the data stored i
 ## Repositories
 
 * ResultsDB - [Bitbucket GIT repo](https://bitbucket.org/rajcze/resultsdb)
-* ResultsDB Client Library - [Bitbucket GIT repo](https://bitbucket.org/rajcze/resultsdb_lib)
+* ResultsDB Client Library - [Bitbucket GIT repo](https://bitbucket.org/rajcze/resultsdb_api)
