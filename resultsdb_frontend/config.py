@@ -1,4 +1,4 @@
-# Copyright 2013, Red Hat, Inc
+# Copyright 2013-2014, Red Hat, Inc
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,6 +17,8 @@
 # Authors:
 #   Tim Flink <tflink@redhat.com>
 #   Josef Skladanka <jskladan@redhat.com>
+#   Ralph Bean <rbean@redhat.com>
+
 
 class Config(object):
     DEBUG = True
@@ -27,8 +29,10 @@ class Config(object):
     SYSLOG_LOGGING = False
     STREAM_LOGGING = True
 
-    PRODUCTION = False
+    HOST = None
+    PORT = None
 
+    PRODUCTION = False
 
 
 class ProductionConfig(Config):
@@ -37,10 +41,12 @@ class ProductionConfig(Config):
 
 
 class DevelopmentConfig(Config):
-    TRAP_BAD_REQUEST_ERRORS=True
+    TRAP_BAD_REQUEST_ERRORS = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/resultsdb_frontend_db.sqlite'
+    HOST = '0.0.0.0'
+    PORT = 5001
 
 
 class TestingConfig(Config):
-    TRAP_BAD_REQUEST_ERRORS=True
+    TRAP_BAD_REQUEST_ERRORS = True
     TESTING = True

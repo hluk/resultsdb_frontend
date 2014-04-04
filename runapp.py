@@ -2,7 +2,7 @@
 #
 # runapp.py - script to facilitate running the resultsdb_frontend app from the CLI
 #
-# Copyright 2013, Red Hat, Inc
+# Copyright 2013-2014, Red Hat, Inc
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,17 +21,14 @@
 # Authors:
 #   Tim Flink <tflink@redhat.com>
 #   Josef Skladanka <jskladan@redhat.com>
+#   Ralph Bean <rbean@redhat.com>
 
-import os
+
 import resultsdb_frontend
 
 if __name__ == '__main__':
-
-    # now that we have FAS integration, we don't want to default to production
-    # when we're not running though mod_wsgi
-
-    if not (os.getenv('TEST') == 'true' or os.getenv('PROD') == 'true'):
-        os.environ['DEV'] = 'true'
-
-    resultsdb_frontend.app.run(host = '0.0.0.0', port = 5001, debug = True)
-
+    resultsdb_frontend.app.run(
+        host=resultsdb_frontend.app.config['HOST'],
+        port=resultsdb_frontend.app.config['PORT'],
+        debug=resultsdb_frontend.app.config['DEBUG'],
+    )
