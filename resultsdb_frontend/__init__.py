@@ -1,4 +1,4 @@
-# Copyright 2013, Red Hat, Inc
+# Copyright 2013-2014, Red Hat, Inc
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 # Authors:
 #   Tim Flink <tflink@redhat.com>
 #   Josef Skladanka <jskladan@redhat.com>
+#   Ralph Bean <rbean@redhat.com>
 
 
 from flask import Flask, render_template
@@ -26,41 +27,34 @@ from flask.ext.sqlalchemy import SQLAlchemy
 import logging
 import os
 
-
 # the version as used in setup.py
 __version__ = "0.0.1"
-
 
 # Flask App
 app = Flask(__name__)
 app.secret_key = 'not-really-a-secret'
 
-# load default configuration
-if os.getenv('DEV') == 'true':
-    app.config.from_object('resultsdb_frontend.config.DevelopmentConfig')
+# Load default config, then override that with a config file
+if os.getenv('PROD') == 'true':
+    default_config_obj = 'resultsdb_frontend.config.ProductionConfig'
+    default_config_file = '/etc/resultsdb/settings.py'
 elif os.getenv('TEST') == 'true':
-    app.config.from_object('resultsdb_frontend.config.TestingConfig')
+    default_config_obj = 'resultsdb_frontend.config.TestingConfig'
+    default_config_file = os.getcwd() + '/conf/settings.py'
 else:
-    if app.secret_key == 'not-really-a-secret':
-        raise Warning("You need to change the app.secret_key value for production")
-    app.config.from_object('resultsdb_frontend.config.ProductionConfig')
+    default_config_obj = 'resultsdb_frontend.config.DevelopmentConfig'
+    default_config_file = os.getcwd() + '/conf/settings.py'
 
+config_file = os.environ.get('RESULTSDB_CONFIG', default_config_file)
 
-# load real configuration values to override defaults
-config_file = '/etc/resultsdb_frontend/settings.py'
-if not app.testing:
-    if os.path.exists(config_file):
-        app.logger.info('Loading configuration from %s' % config_file)
-        app.config.from_pyfile(config_file)
-    else:
-        config_file = os.path.abspath('conf/settings.py')
-        if os.path.exists(config_file):
-            app.logger.info('Loading configuration from %s' % config_file)
-            app.config.from_pyfile(config_file)
-        else:
-            app.logger.info('No extra config found, using defaults')
+if not os.path.exists(config_file):
+    raise RuntimeError("config file %r does not exist" % config_file)
 
-# setup logging
+app.config.from_object(default_config_obj)
+app.config.from_pyfile(config_file)
+
+if app.secret_key == 'not-really-a-secret':
+    raise Warning("You need to change the app.secret_key value for production")
 
 # setup logging
 fmt = '[%(filename)s:%(lineno)d] ' if app.debug else '%(module)-12s '
@@ -101,7 +95,6 @@ def setup_logging():
 setup_logging()
 
 app.logger.debug('using DBURI: %s' % app.config['SQLALCHEMY_DATABASE_URI'])
-
 
 # database
 db = SQLAlchemy(app)

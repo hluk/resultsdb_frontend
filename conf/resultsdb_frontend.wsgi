@@ -9,4 +9,7 @@ import pkg_resources
 #import sys
 #sys.path.insert(0,"/var/www/resultsdb_frontend/")
 
+import os
+os.environ['RESULTSDB_FRONTEND_CONFIG'] = '/etc/resultsdb/settings.py'
+
 from resultsdb_frontend import app as application
