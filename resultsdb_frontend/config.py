@@ -24,6 +24,8 @@ class Config(object):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'sqlite://'
 
+    RDB_URL = 'http://localhost:5000/api/v1.0'
+
     LOGFILE = '/var/log/resultsdb_frontend/resultsdb_frontend.log'
     FILE_LOGGING = False
     SYSLOG_LOGGING = False
