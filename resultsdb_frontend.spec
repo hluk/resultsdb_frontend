@@ -20,10 +20,7 @@ Source0:        https://bitbucket.org/rajcze/%{pkgname}/get/v1.0.tar.gz
 BuildArch:      noarch
 
 Requires:       python-flask
-Requires:       python-flask-sqlalchemy
-Requires:       MySQL-python
 Requires:       python-flask-wtf
-Requires:       python-flask-login
 Requires:       python-flask-restful
 Requires:       python-six
 Requires:       python-iso8601

@@ -2,7 +2,6 @@
 # cli to generate a config file
 RDB_URL = 'http://localhost:5000/api/v1.0'
 SECRET_KEY = 'not-really-a-secret'
-SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://dbuser:dbpassword@dbhost:dbport/dbname'
 FILE_LOGGING = False
 LOGFILR = '/var/log/resultsdb_frontend/resultsdb_frontend.log'
 SYSLOG_LOGGING = False

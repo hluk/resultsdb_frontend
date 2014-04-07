@@ -1,6 +1,6 @@
 # This is required for running on EL6
 import __main__
-__main__.__requires__ = ['SQLAlchemy >= 0.7', 'Flask >= 0.9', 'jinja2 >= 2.6']
+__main__.__requires__ = ['Flask >= 0.9', 'jinja2 >= 2.6']
 import pkg_resources
 
 #activate_this = '/var/www/resultsdb_frontend/env/bin/activate_this.py'
