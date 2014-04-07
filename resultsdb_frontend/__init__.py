@@ -21,8 +21,6 @@
 
 
 from flask import Flask, render_template
-from flask.ext.login import LoginManager
-from flask.ext.sqlalchemy import SQLAlchemy
 
 import logging
 import os
@@ -94,22 +92,6 @@ def setup_logging():
 
 setup_logging()
 
-app.logger.debug('using DBURI: %s' % app.config['SQLALCHEMY_DATABASE_URI'])
-
-# database
-db = SQLAlchemy(app)
-
-# setup login manager
-login_manager = LoginManager()
-login_manager.setup_app(app)
-login_manager.login_view = 'login_page.login'
-
 # register blueprints
 from resultsdb_frontend.controllers.main import main
 app.register_blueprint(main)
-
-from resultsdb_frontend.controllers.login_page import login_page
-app.register_blueprint(login_page)
-
-from resultsdb_frontend.controllers.admin import admin
-app.register_blueprint(admin)

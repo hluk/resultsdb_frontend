@@ -22,7 +22,6 @@
 
 class Config(object):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite://'
 
     RDB_URL = 'http://localhost:5000/api/v1.0'
 
@@ -44,7 +43,6 @@ class ProductionConfig(Config):
 
 class DevelopmentConfig(Config):
     TRAP_BAD_REQUEST_ERRORS = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/resultsdb_frontend_db.sqlite'
     HOST = '0.0.0.0'
     PORT = 5001
 
