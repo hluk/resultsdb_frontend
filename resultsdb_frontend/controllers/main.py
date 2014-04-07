@@ -22,7 +22,6 @@ from resultsdb_frontend import app
 
 from resultsdb_api import ResultsDBapi
 
-RDB_URL = 'http://localhost:5000/api/v1.0'
 rdb_api = None
 
 
@@ -31,7 +30,7 @@ main = Blueprint('main', __name__)
 @app.before_first_request
 def before_first_request():
     global rdb_api
-    rdb_api = ResultsDBapi(RDB_URL)
+    rdb_api = ResultsDBapi(app.config['RDB_URL'])
 
 @main.route('/')
 @main.route('/index')
