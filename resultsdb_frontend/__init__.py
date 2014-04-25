@@ -26,7 +26,7 @@ import logging
 import os
 
 # the version as used in setup.py
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 
 # Flask App
 app = Flask(__name__)
@@ -43,7 +43,7 @@ else:
     default_config_obj = 'resultsdb_frontend.config.DevelopmentConfig'
     default_config_file = os.getcwd() + '/conf/settings.py'
 
-config_file = os.environ.get('RESULTSDB_CONFIG', default_config_file)
+config_file = os.environ.get('RESULTSDB_FRONTEND_CONFIG', default_config_file)
 
 if not os.path.exists(config_file):
     raise RuntimeError("config file %r does not exist" % config_file)
