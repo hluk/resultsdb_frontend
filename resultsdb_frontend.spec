@@ -4,7 +4,7 @@
 %endif
 
 Name:           resultsdb_frontend
-Version:        1.0.2
+Version:        1.1.0
 Release:        1%{?dist}
 Summary:        Frontend for the ResultsDB
 
@@ -54,6 +54,9 @@ install conf/settings.py.example %{buildroot}%{_sysconfdir}/resultsdb_frontend/s
 %{_datadir}/resultsdb_frontend/*
 
 %changelog
+* Fri May 16 2014 Tim Flink <tflink@fedoraproject.org> - 1.1.0-1
+- Releasing resultsdb_frontend 1.1.0
+
 * Fri Apr 25 2014 Tim Flink <tflink@fedoraproject.org> - 1.0.2-1
 - updating to new upstream, fixing some variable name errors
 
