@@ -26,6 +26,10 @@
     <div class="col-md-9"><a href="{{ url_for('main.job', job_id=result.job_url.split('/')[-1]) }}">Job</a></div>
 </div>
 <div class="row">
+    <div class="col-md-2"><strong>Log</strong></div>
+    <div class="col-md-9"><a href="{{ result.log_url }}">Log &rarr;</a></div>
+</div>
+<div class="row">
     <div class="col-md-12">&nbsp;</div>
 </div>
 
