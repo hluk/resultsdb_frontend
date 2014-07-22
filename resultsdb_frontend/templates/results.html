@@ -9,6 +9,7 @@
         <th>Testcase</th>
         <th>Outcome</th>
         <th>Summary</th>
+        <th>Item</th>
         <th>Details</th>
         <th>Job</th>
         <th>Log</th>
@@ -22,6 +23,11 @@
         <td><a href="{{ url_for('main.testcase', testcase_name=result.testcase.href.split('/')[-1]) }}">{{ result.testcase.name }}</a></td>
         <td>{{ result.outcome }}</td>
         <td>{{ result.summary }}</td>
+        {% if result.result_data.item %}
+            <td>{{ ",".join(result.result_data.item) }}</td>
+        {% else %}
+            <td>-</td>
+        {% endif %}
         <td><a href="{{ url_for('main.result', result_id=result.id) }}">Details</a></td>
         <td><a href="{{ url_for('main.job', job_id=result.job_url.split('/')[-1]) }}">Job</a></td>
         <td><a href="{{ result.log_url }}">Log &rarr;</a></td>
