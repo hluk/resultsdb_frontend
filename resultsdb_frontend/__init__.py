@@ -21,16 +21,19 @@
 
 
 from flask import Flask, render_template
+from resultsdb_frontend import proxy
 
 import logging
 import os
 
 # the version as used in setup.py
-__version__ = "1.1.1"
+__version__ = "1.1.3"
 
 # Flask App
 app = Flask(__name__)
 app.secret_key = 'not-really-a-secret'
+
+app.wsgi_app = proxy.ReverseProxied(app.wsgi_app)
 
 # Load default config, then override that with a config file
 if os.getenv('PROD') == 'true':

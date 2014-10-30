@@ -1,2 +1,6 @@
 body { padding-top: 70px; }
 
+.popover {
+	z-index: 9000;
+}
+

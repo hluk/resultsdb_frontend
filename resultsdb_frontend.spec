@@ -4,7 +4,7 @@
 %endif
 
 Name:           resultsdb_frontend
-Version:        1.1.1
+Version:        1.1.3
 Release:        1%{?dist}
 Summary:        Frontend for the ResultsDB
 
@@ -54,6 +54,9 @@ install conf/settings.py.example %{buildroot}%{_sysconfdir}/resultsdb_frontend/s
 %{_datadir}/resultsdb_frontend/*
 
 %changelog
+* Wed Oct 29 2014 Tim Flink <tflink@fedoraproject.org> - 1.1.3-1
+- adding search button to frontpage (T347)
+
 * Fri Jun 27 2014 Tim Flink <tflink@fedoraproject.org> - 1.1.1-1
 - Adding link to logs from result detail
 
