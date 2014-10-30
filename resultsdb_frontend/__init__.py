@@ -27,7 +27,7 @@ import logging
 import os
 
 # the version as used in setup.py
-__version__ = "1.1.1"
+__version__ = "1.1.3"
 
 # Flask App
 app = Flask(__name__)
