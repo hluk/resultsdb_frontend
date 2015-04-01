@@ -76,6 +76,7 @@
       <div id="popover-content" class="hide">
         
         <form id="searchform" role="form" name="searchform" action="">
+          <input id="url" type="hidden" value="{{ url_for('main.results') }}">
           <div class="form-group">
           <input class="form-control" id="query" placeholder="Search" value="">
           </div>

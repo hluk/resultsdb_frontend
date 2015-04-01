@@ -45,8 +45,7 @@ $(function() {
       var query = $(".popover #query").val(); 
       var testcase = $(".popover #testcase").val();
       var type = $(".popover #type").val();
-
-      var url = "/results?"
+      var url = $(".popover #url").val() + "?"
 
       if(query != "")
         if($(".popover #exact").prop('checked'))

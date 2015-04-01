@@ -4,7 +4,7 @@
 %endif
 
 Name:           resultsdb_frontend
-Version:        1.1.3
+Version:        1.1.4
 Release:        1%{?dist}
 Summary:        Frontend for the ResultsDB
 
@@ -54,6 +54,10 @@ install conf/settings.py.example %{buildroot}%{_sysconfdir}/resultsdb_frontend/s
 %{_datadir}/resultsdb_frontend/*
 
 %changelog
+* Wed Apr 1 2015 Tim Flink <tflink@fedoraproject.org> - 1.1.4-1
+- better handling of 404 errors (T410)
+- fixing search button to redirect to proper URL (T402)
+
 * Wed Oct 29 2014 Tim Flink <tflink@fedoraproject.org> - 1.1.3-1
 - adding search button to frontpage (T347)
 

@@ -20,7 +20,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 from resultsdb_frontend import app
 
-from resultsdb_api import ResultsDBapi
+from resultsdb_api import ResultsDBapi, ResultsDBapiException
 
 rdb_api = None
 
@@ -44,7 +44,10 @@ def jobs():
 
 @main.route('/jobs/<job_id>')
 def job(job_id):
-    job = rdb_api.get_job(id = job_id)
+    try:
+        job = rdb_api.get_job(id = job_id)
+    except ResultsDBapiException as e:
+        return str(e)
     jobs = dict(prev = None, next = None, data = [job])
     return render_template('jobs.html', jobs = jobs)
 
@@ -58,7 +61,10 @@ def results():
 
 @main.route('/results/<result_id>')
 def result(result_id):
-    result = rdb_api.get_result(id = result_id)
+    try:
+        result = rdb_api.get_result(id = result_id)
+    except ResultsDBapiException as e:
+        return str(e)
     return render_template('result_detail.html', result = result)
 
 @main.route('/testcases')
@@ -69,7 +75,10 @@ def testcases():
 
 @main.route('/testcases/<testcase_name>')
 def testcase(testcase_name):
-    tc = rdb_api.get_testcase(name = testcase_name)
+    try:
+        tc = rdb_api.get_testcase(name = testcase_name)
+    except ResultsDBapiException as e:
+        return str(e)
     tcs = dict(prev = None, next = None, data = [tc])
     return render_template('testcases.html', testcases = tcs)
 
