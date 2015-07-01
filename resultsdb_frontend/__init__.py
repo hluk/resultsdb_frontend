@@ -35,6 +35,9 @@ app.secret_key = 'not-really-a-secret'
 
 app.wsgi_app = proxy.ReverseProxied(app.wsgi_app)
 
+# Expose the __version__ variable in templates
+app.jinja_env.globals['app_version'] = __version__
+
 # Load default config, then override that with a config file
 if os.getenv('PROD') == 'true':
     default_config_obj = 'resultsdb_frontend.config.ProductionConfig'
