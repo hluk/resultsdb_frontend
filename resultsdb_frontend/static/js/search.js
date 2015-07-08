@@ -47,23 +47,28 @@ $(function() {
       var type = $(".popover #type").val();
       var url = $(".popover #url").val() + "?"
 
-      if(query != "")
-        if($(".popover #exact").prop('checked'))
-          url += "item="+query;
-        else 
-          url += "item:like="+query+"%";
 
+      query = query.replace(/\*/g,"%");
+
+      if(query.includes("%")){
+        //wildcard match
+        url += "item:like=" + query;
+      } else {
+        //substring match
+        url += "item:like=%" + query + "%";
+      }
+      
       if(testcase != 0)
         url += "&testcase_name="+testcase;
       if(type != 0)
         url += "&type="+type;
-
+  
       e.preventDefault();
 
       //progressbar();
       //$(".popover #searchform").hide();
 
-      window.location.href = url;
+      window.location.href = encodeURI(url);
     });  
   });
   
