@@ -23,15 +23,15 @@
 class Config(object):
     DEBUG = True
 
-    RDB_URL = 'http://localhost:5000/api/v1.0'
+    RDB_URL = 'http://localhost:5001/api/v1.0'
 
     LOGFILE = '/var/log/resultsdb_frontend/resultsdb_frontend.log'
     FILE_LOGGING = False
     SYSLOG_LOGGING = False
     STREAM_LOGGING = True
 
-    HOST = None
-    PORT = None
+    HOST = '0.0.0.0'
+    PORT = 5002
 
     PRODUCTION = False
 
@@ -43,8 +43,6 @@ class ProductionConfig(Config):
 
 class DevelopmentConfig(Config):
     TRAP_BAD_REQUEST_ERRORS = True
-    HOST = '0.0.0.0'
-    PORT = 5001
 
 
 class TestingConfig(Config):

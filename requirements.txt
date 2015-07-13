@@ -5,3 +5,4 @@ WTForms>1.0
 #     from flask.json import dumps, JSONEncoder
 Flask-WTF==0.8
 resultsdb_api
+simplejson==3.7.3

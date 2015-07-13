@@ -9,4 +9,4 @@ conf/settings.py
 *build/
 *dist/
 *.egg*
-/env
+/env*/
