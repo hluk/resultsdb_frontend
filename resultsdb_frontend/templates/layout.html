@@ -73,13 +73,13 @@
     <!-- Search html -->
     <div id="popover-head" class="hide">Search</div>
       <div id="popover-content" class="hide">
-        
+
         <form id="searchform" role="form" name="searchform" action="">
           <input id="url" type="hidden" value="{{ url_for('main.results') }}">
           <div class="form-group">
           <input class="form-control" id="query" placeholder="Item" value="">
           </div>
-          
+
           <div class="form-group">
           <select class="form-control" id="testcase">
             <option value="0">Any testcase</option>
@@ -88,7 +88,7 @@
             <option value="upgradepath">Upgradepath</option>
           </select>
           </div>
-          
+
           <div class="form-group">
           <select class="form-control" id="type">
             <option value="0">Any type</option>
@@ -96,7 +96,17 @@
             <option value="bodhi_update">Bodhi update</option>
             <option value="koji_tag">Koji tag</option></select>
           </div>
-          
+
+          <div class="form-group">
+            <select multiple class="form-control" id="outcome" size=5>
+                <option>PASSED</option>
+                <option>FAILED</option>
+                <option>INFO</option>
+                <option>ABORTED</option>
+                <option>NEEDS_INSPECTION</option>
+            </select>
+          </div>
+
           <button type="submit" class="btn btn-default" id="go">Go!</button>
         </form>
         <div id="progressbar-animation" class="hide" style="width:200px;"></div>

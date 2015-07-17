@@ -45,8 +45,8 @@ $(function() {
       var query = $(".popover #query").val();
       var testcase = $(".popover #testcase").val();
       var type = $(".popover #type").val();
-      var url = $(".popover #url").val() + "?"
-
+      var url = $(".popover #url").val() + "?";
+      var outcome = $(".popover #outcome").val();
 
       query = query.replace(/\*/g,"%");
 
@@ -62,6 +62,8 @@ $(function() {
         url += "&testcase_name="+testcase;
       if(type != 0)
         url += "&type="+type;
+      if(outcome)
+        url += "&outcome="+outcome;
 
       e.preventDefault();
 
