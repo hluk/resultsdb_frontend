@@ -4,7 +4,7 @@
 %endif
 
 Name:           resultsdb_frontend
-Version:        1.1.5
+Version:        1.1.6
 Release:        1%{?dist}
 Summary:        Frontend for the ResultsDB
 
@@ -54,6 +54,10 @@ install conf/settings.py.example %{buildroot}%{_sysconfdir}/resultsdb_frontend/s
 %{_datadir}/resultsdb_frontend/*
 
 %changelog
+* Tue Jul 21 2015 Martin Krizek <mkrizek@redhat.com> - 1.1.6-1
+- firefox search fix
+- search by outcome
+
 * Wed Jul 8 2015 Martin Krizek <mkrizek@redhat.com> - 1.1.5-1
 - Search improvements
 - Updated conf to be compatible with Apache 2.4
