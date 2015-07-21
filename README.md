@@ -7,31 +7,38 @@ ResultsDB fronted is a simple application that allows browsing the data stored i
 * ResultsDB - [Bitbucket GIT repo](https://bitbucket.org/fedoraqa/resultsdb)
 * ResultsDB Client Library - [Bitbucket GIT repo](https://bitbucket.org/fedoraqa/resultsdb_api)
 
-## Hacking
+## Quick development setup
 
 You'll need to stand up an instance of the core
-[resultsdb](https://bitbucket.org/rajcze/resultsdb) alongside this frontend for
-it to work.
+[resultsdb](https://bitbucket.org/fedoraqa/resultsdb) alongside this frontend
+for it to work.
 
 First, clone the repository.
 
-Then, setup a virtual environment for development.
+Then, setup a virtual environment for development:
 
-    $ sudo yum install python-virtualenv
-    $ virtualenv resultsdb_frontend
-    $ source resultsdb_frontend/bin/activate
+    $ sudo dnf install python-virtualenv
+    $ virtualenv env_resultsdb_frontend
+    $ source env_resultsdb_frontend/bin/activate
     $ pip install -r requirements.txt
-    $ python setup.py install
 
-Setup a config file:
+Run the server:
 
-    $ cp conf/settings.py.example conf/settings.py
-    $ # edit conf/settings.py accordingly
+    $ DEV=true python runapp.py
 
-Initialize your database:
+The ResultsDB frontend is now running at <http://localhost:5002>. It expects
+the ResultsDB server to be available at <http://localhost:5001/api/v1.0>.
 
-    $ ./init_db.sh
+## Adjusting configuration
 
-Run the server
+You can configure this app by copying `conf/settings.py.example` into
+`conf/setting.py` and adjusting values as you see fit. It overrides default
+values in `resultsdb_frontend/config.py`.
 
-    $ python runapp.py
+## Using with libtaskotron
+
+You might want to use this tool together with libtaskotron. To use your own
+*ResultsDB frontend* in libtaskotron, edit `/etc/taskotron/taskotron.yaml` and
+set the following value::
+
+    resultsdb_frontend: http://localhost:5002
