@@ -8,7 +8,7 @@
         <th>Start time (UTC)</th>
         <th>Name</th>
         <th>Results</th>
-        <th>Taskbot URL</th>
+        <th>Job Details</th>
       </tr>
     </thead>
     <tbody>
@@ -18,7 +18,7 @@
         <td>{{ job.start_time | replace("T", " ")}}</td>
         <td>{{ job.name }}</td>
         <td><a href="{{ url_for('main.results', job_id = job.id) }}">{{ job.results_count }} results</a></td>
-        <td><a href="{{ job.ref_url }}">Ref &rarr;</a></td>
+        <td><a href="{{ job.ref_url }}">Info &rarr;</a></td>
       </tr>
     {% endfor %}
     </tbody>
