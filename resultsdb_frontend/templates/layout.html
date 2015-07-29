@@ -113,5 +113,19 @@
       </div>
     </div>
 
+    {% if config['FEDMENU_URL'] is defined %}
+    <script src="{{ config['FEDMENU_URL'] }}/js/fedmenu.js"></script>
+    <script>
+      fedmenu({
+        'url': '{{ config["FEDMENU_DATA_URL"] }}',
+        'mimeType': 'application/javascript',
+        'position': 'bottom-right',
+        // It would be cool if we could guess at what package the current page
+        // is about.  If we knew, then we could pass `'package': package,` to
+        // fedmenu to link to more info.
+      });
+    </script>
+    {% endif %}
+
   </body>
 </html>
