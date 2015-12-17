@@ -4,7 +4,7 @@
 %endif
 
 Name:           resultsdb_frontend
-Version:        1.1.8
+Version:        1.1.9
 Release:        1%{?dist}
 Summary:        Frontend for the ResultsDB
 
@@ -54,6 +54,10 @@ install conf/settings.py.example %{buildroot}%{_sysconfdir}/resultsdb_frontend/s
 %{_datadir}/resultsdb_frontend/*
 
 %changelog
+* Thu Dec 17 2015 Martin Krizek <mkrizek@redhat.com> - 1.1.9-1
+- cleaner search with no item specified (D566)
+- change mock root to f22
+
 * Tue Aug 18 2015 Tim Flink <tflink@fedoraproject.org> - 1.1.8-1
 - add fedmenu support (D363)
 
