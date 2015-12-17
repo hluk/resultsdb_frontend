@@ -50,12 +50,14 @@ $(function() {
 
       query = query.replace(/\*/g,"%");
 
-      if(query.indexOf("%") != -1){
-        //wildcard match
-        url += "item:like=" + query;
-      } else {
-        //substring match
-        url += "item:like=%" + query + "%";
+      if(query){
+          if(query.indexOf("%") != -1){
+            //wildcard match
+            url += "item:like=" + query;
+          } else {
+            //substring match
+            url += "item:like=%" + query + "%";
+          }
       }
 
       if(testcase != 0)
