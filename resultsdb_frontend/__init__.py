@@ -47,7 +47,7 @@ elif os.getenv('TEST') == 'true':
     default_config_file = os.getcwd() + '/conf/settings.py'
 else:
     default_config_obj = 'resultsdb_frontend.config.ProductionConfig'
-    default_config_file = '/etc/resultsdb/settings.py'
+    default_config_file = '/etc/resultsdb_frontend/settings.py'
 
 app.config.from_object(default_config_obj)
 
