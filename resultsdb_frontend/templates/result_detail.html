@@ -6,7 +6,7 @@
     <div class="col-md-9">{{ result.id }}</div>
 </div>
 <div class="row">
-    <div class="col-md-2"><strong>Submit time</strong></div>
+    <div class="col-md-2"><strong>Submitted</strong></div>
     <div class="col-md-9">{{ result.submit_time | replace("T", " ")}}</div>
 </div>
 <div class="row">
@@ -18,25 +18,27 @@
     <div class="col-md-9">{{ result.outcome }}</div>
 </div>
 <div class="row">
-    <div class="col-md-2"><strong>Summary</strong></div>
-    <div class="col-md-9">{{ result.summary }}</div>
+    <div class="col-md-2"><strong>Note</strong></div>
+    <div class="col-md-9">{{ result.note }}</div>
 </div>
 <div class="row">
-    <div class="col-md-2"><strong>Job</strong></div>
-    <div class="col-md-9"><a href="{{ url_for('main.job', job_id=result.job_url.split('/')[-1]) }}">Job</a></div>
+    <div class="col-md-2"><strong>Groups</strong></div>
+    <div class="col-md-9">
+      <a href="{{ url_for('main.groups', uuid=result.groups[1])}}">In {{result.groups[0]}} group{%if result.groups[0] != 1%}s{%endif%}</a>
+    </div>
 </div>
 <div class="row">
-    <div class="col-md-2"><strong>Log</strong></div>
-    <div class="col-md-9"><a href="{{ result.log_url }}">Log &rarr;</a></div>
+    <div class="col-md-2"><strong>Logs</strong></div>
+    <div class="col-md-9"><a href="{{ result.ref_url }}">Link &rarr;</a></div>
 </div>
 <div class="row">
     <div class="col-md-12">&nbsp;</div>
 </div>
 
-{% for key in result.result_data %}
+{% for key in result.data %}
 <div class="row">
     <div class="col-md-2"><strong>{{key}}</strong></div>
-    <div class="col-md-9">{{', '.join(result.result_data[key])}}</div>
+    <div class="col-md-9">{{', '.join(result.data[key])}}</div>
 </div>
 {% endfor %}
 

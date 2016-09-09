@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Group</th>
+        <th>Results</th>
+        <th>Logs</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for group in groups.data %}
+      <tr>
+        <td>
+          {% if group.description %}
+            {{ group.description }}
+            <a href="#{{group.uuid}}" class="btn btn-xs btn-info" style="float: right" data-toggle="collapse">Show UUID</a>
+            <div id="{{group.uuid}}" class="collapse">{{group.uuid}}</div>
+          {% else %}
+            {{ group.uuid }}
+          {% endif %}
+        </td>
+        <td><a href="{{ url_for('main.results', groups = group.uuid) }}">{{ group.results_count }} results</a></td>
+        <td><a href="{{ group.ref_url }}">Link &rarr;</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+<ul class="pager">
+  {% if groups.prev %}
+    <li class="previous"><a href="{{ url_for('main.groups') }}?{{ groups.prev.split('?')[-1] }}">&larr; Newer groups</a></li>
+  {% endif %}
+  {% if groups.next %}
+    <li class="next"><a href="{{ url_for('main.groups') }}?{{ groups.next.split('?')[-1] }}">Older groups &rarr;</a></li>
+  {% endif %}
+</ul>
+
+
+{% endblock %}

@@ -35,28 +35,28 @@ def before_first_request():
 @main.route('/')
 @main.route('/index')
 def index():
-     return redirect(url_for('main.jobs'))
+     return redirect(url_for('main.results'))
 
-@main.route('/jobs')
-def jobs():
-    jobs = rdb_api.get_jobs(**dict(request.args))
-    return render_template('jobs.html', jobs = jobs)
+@main.route('/groups')
+def groups():
+    groups = rdb_api.get_groups(**dict(request.args))
+    return render_template('groups.html', groups = groups)
 
-@main.route('/jobs/<job_id>')
-def job(job_id):
+@main.route('/groups/<group_id>')
+def group(group_id):
     try:
-        job = rdb_api.get_job(id = job_id)
+        group = rdb_api.get_groups(group_id)
     except ResultsDBapiException as e:
         return str(e)
-    jobs = dict(prev = None, next = None, data = [job])
-    return render_template('jobs.html', jobs = jobs)
+    groups = dict(prev = None, next = None, data = [group])
+    return render_template('groups.html', groups = groups)
 
 @main.route('/results')
 def results():
     args = dict(request.args)
-    if 'job_id' in args:
-        args['job_id'] = request.args['job_id']
     results = rdb_api.get_results(**args)
+    for result in results['data']:
+        result['groups'] = (len(result['groups']), ','.join([r.split('/')[-1].strip() for r in result['groups']]))
     return render_template('results.html', results = results)
 
 @main.route('/results/<result_id>')
@@ -65,6 +65,7 @@ def result(result_id):
         result = rdb_api.get_result(id = result_id)
     except ResultsDBapiException as e:
         return str(e)
+    result['groups'] = (len(result['groups']), ','.join([r.split('/')[-1].strip() for r in result['groups']]))
     return render_template('result_detail.html', result = result)
 
 @main.route('/testcases')
