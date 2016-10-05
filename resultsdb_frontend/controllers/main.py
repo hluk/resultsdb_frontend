@@ -45,7 +45,7 @@ def groups():
 @main.route('/groups/<group_id>')
 def group(group_id):
     try:
-        group = rdb_api.get_groups(group_id)
+        group = rdb_api.get_group(group_id)
     except ResultsDBapiException as e:
         return str(e)
     groups = dict(prev = None, next = None, data = [group])
@@ -56,7 +56,7 @@ def results():
     args = dict(request.args)
     results = rdb_api.get_results(**args)
     for result in results['data']:
-        result['groups'] = (len(result['groups']), ','.join([r.split('/')[-1].strip() for r in result['groups']]))
+        result['groups'] = (len(result['groups']), ','.join(result['groups']))
     return render_template('results.html', results = results)
 
 @main.route('/results/<result_id>')
@@ -65,7 +65,7 @@ def result(result_id):
         result = rdb_api.get_result(id = result_id)
     except ResultsDBapiException as e:
         return str(e)
-    result['groups'] = (len(result['groups']), ','.join([r.split('/')[-1].strip() for r in result['groups']]))
+    result['groups'] = (len(result['groups']), ','.join(result['groups']))
     return render_template('result_detail.html', result = result)
 
 @main.route('/testcases')
