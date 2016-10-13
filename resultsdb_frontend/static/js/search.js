@@ -1,86 +1,95 @@
-/* waiting for reliable CND or own hosting of progressbar.js
-   https://github.com/kimmobrunfeldt/progressbar.js
-
-
-function progressbar(){
-  $(".popover #progressbar-animation").removeClass("hide");
-  var element = $(".popover #progressbar-animation")[0];
-  var circle = new ProgressBar.Circle(element, {
-    color: "#428BCA",
-    strokeWidth: 0.75,
-    fill: "#fff",
-    easing: "easeInOut",
-    duration: 1200
-  });
-
-  function doit(){
-  circle.animate(1, function() {
-    setTimeout(function(){
-      circle.set(0);
-      doit();
-    }, 150);
-  });
-  }
-
-  doit();
-}
-*/
-
-$(function() {
-  $("#popover").popover(
-    {
-      container: 'body',
-      html : true,
-      title: function() {
-        return $("#popover-head").html();
-      },
-      content: function() {
-        return $("#popover-content").html();
-      }
-  }
-  ).on('click', function(){
-    $(".popover #query").focus();
-    $(".popover #searchform").submit(function(e){
-
-      var query = $(".popover #query").val();
-      var testcase = $(".popover #testcase").val();
-      var type = $(".popover #type").val();
-      var url = $(".popover #url").val() + "?";
-      var outcome = $(".popover #outcome").val();
-
-      query = query.replace(/\*/g,"%");
-
-      if(query){
-          if(query.indexOf("%") != -1){
-            //wildcard match
-            url += "item:like=" + query;
-          } else {
-            //substring match
-            url += "item:like=%" + query + "%";
-          }
-      }
-
-      if(testcase != 0)
-        url += "&testcase_name="+testcase;
-      if(type != 0)
-        url += "&type="+type;
-      if(outcome)
-        url += "&outcome="+outcome;
-
-      e.preventDefault();
-
-      //progressbar();
-      //$(".popover #searchform").hide();
-
-      window.location.href = encodeURI(url);
+$('document').ready(function() {
+    // set up the typeahead
+    var testcases = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.nonword,
+        queryTokenizer: Bloodhound.tokenizers.nonword,
+        prefetch: {
+            url: '/testcase_tokenizer',
+            cache: false,
+        }
     });
-  });
 
-  $(document).bind('keypress', function(e) {
+    $('#testcase').typeahead({
+        hint: true,
+        highlight: true,
+        minLength: 0
+      },
+      {
+        name: 'testcases',
+        limit: Infinity,
+        source: testcases
+      }
+    );
+
+    // Map the / key to switching the search field
+    $(document).bind('keypress', function(e) {
     if(e.keyCode == 47 && !$(":focus").is("input")) //slash key
     {
-      e.preventDefault();
-      $("#popover").click();
+        e.preventDefault();
+        $("#searchButton").click();
     }
-  });
+    });
+
+    // Focus the item field when search is shown
+    $('#collapseSearch').on('shown.bs.collapse', function () {
+        $("#item").focus();
+    })
+
+    // Replace the submit button behaviour
+    $("#searchform").submit(function(e){
+        e.preventDefault();
+
+        var url = $("#url").val() + "?";
+        var item = $.trim($("#item").val());
+        var testcase = $.trim($("#testcase").val());
+        var outcome = $("#outcome").val();
+
+        // split the string by whitespace or comma
+        items = item.split(/[\s,]+/);
+        var item_query = "";
+        // for each part add it to the query-string buffer
+        items.forEach(function(item){
+            item = $.trim(item);
+            if(item){
+                if(item.indexOf("*") != -1){
+                    //wildcard match
+                    item_query += item + ",";
+                } else {
+                    //substring match
+                    item_query += "*" + item + "*,";
+                }
+            }
+        });
+        // if the search contained any item value, add it to overall query url
+        if(item_query){
+            url+='item:like='+item_query.slice(0, -1);
+        }
+
+        if(testcase != 0){
+            // split by whitespace or comma
+            testcases = testcase.split(/[\s,]+/);
+
+            // check whethe like-search is necessary
+            var is_like=false;
+            testcases.forEach(function(testcase){
+                if(testcase.indexOf("*") != -1){
+                    is_like=true;
+                }
+                return $.trim(testcase);
+            });
+            testcase = testcases.join(',');
+            
+            // construct the url
+            url += "&testcases";
+            if(is_like){
+                url += ":like";
+            }
+            url += "="+testcase;
+        }
+        if(outcome)
+            url += "&outcome="+outcome;
+
+        console.log(url);
+        window.location.href = encodeURI(url);
+    });
 });

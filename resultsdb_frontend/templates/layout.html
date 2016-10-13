@@ -29,7 +29,7 @@
           </ul>
 
           <form class="navbar-form navbar-right" role="search">
-            <button type="button" class="btn btn-default" id="popover" data-placement="bottom">
+            <button type="button" class="btn btn-default" id="searchButton" data-toggle="collapse" data-target="#collapseSearch">
               <span class="glyphicon glyphicon-search"></span>
             </button>
           </form>
@@ -40,6 +40,34 @@
 
 
     <div class="container">
+      <!-- Search html -->
+      <div class="collapse panel panel-default" id="collapseSearch">
+        <div class="panel-heading">Search</div>
+        <div class="panel-body">
+          <form id="searchform" role="form" name="searchform" action="">
+            <input id="url" type="hidden" value="{{ url_for('main.results') }}">
+            <div class="form-group">
+              <input class="form-control" id="item" placeholder="Item" value="">
+            </div>
+
+            <div class="form-group" id="scrollable-dropdown-menu">
+              <input class="form-control" id="testcase" placeholder="Testcase" value="">
+            </div>
+
+            <div class="form-group">
+              <select multiple class="form-control" id="outcome" size=4>
+                  <option>PASSED</option>
+                  <option>FAILED</option>
+                  <option>INFO</option>
+                  <option>NEEDS_INSPECTION</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-default" id="go">Go!</button>
+          </form>
+        </div>
+      </div>
+
     {% for message in get_flashed_messages() %}
       <div class="alert alert-info">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -64,54 +92,10 @@
     <script src="//code.jquery.com/jquery.js"></script>
     <!-- Include all compiled plugins -->
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-    <!-- Progressbar eyecandy (https://github.com/kimmobrunfeldt/progressbar.js)
-    <script src="waiting for reliable CND or own hosting"></script>
-    -->
     <!-- Search logic -->
+    <script src="http://twitter.github.com/typeahead.js/releases/0.11.1/typeahead.bundle.js"></script>
     <script src="{{ url_for('static', filename='js/search.js') }}"></script>
 
-    <!-- Search html -->
-    <div id="popover-head" class="hide">Search</div>
-      <div id="popover-content" class="hide">
-
-        <form id="searchform" role="form" name="searchform" action="">
-          <input id="url" type="hidden" value="{{ url_for('main.results') }}">
-          <div class="form-group">
-          <input class="form-control" id="query" placeholder="Item" value="">
-          </div>
-
-          <div class="form-group">
-          <select class="form-control" id="testcase">
-            <option value="0">Any testcase</option>
-            <option value="rpmlint">Rpmlint</option>
-            <option value="depcheck">Depcheck</option>
-            <option value="upgradepath">Upgradepath</option>
-          </select>
-          </div>
-
-          <div class="form-group">
-          <select class="form-control" id="type">
-            <option value="0">Any type</option>
-            <option value="koji_build">Koji build</option>
-            <option value="bodhi_update">Bodhi update</option>
-            <option value="koji_tag">Koji tag</option></select>
-          </div>
-
-          <div class="form-group">
-            <select multiple class="form-control" id="outcome" size=5>
-                <option>PASSED</option>
-                <option>FAILED</option>
-                <option>INFO</option>
-                <option>ABORTED</option>
-                <option>NEEDS_INSPECTION</option>
-            </select>
-          </div>
-
-          <button type="submit" class="btn btn-default" id="go">Go!</button>
-        </form>
-        <div id="progressbar-animation" class="hide" style="width:200px;"></div>
-      </div>
-    </div>
 
     {% if config['FEDMENU_URL'] is defined %}
     <script src="{{ config['FEDMENU_URL'] }}/js/fedmenu.js"></script>

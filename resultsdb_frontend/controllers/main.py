@@ -17,35 +17,53 @@
 # Authors:
 #   Josef Skladanka <jskladan@redhat.com>
 
-from flask import Blueprint, render_template, redirect, url_for, request
+import json
+from flask import Blueprint, render_template, redirect, url_for, request, Response
 from resultsdb_frontend import app
 
+from werkzeug.contrib.cache import SimpleCache
+CACHE = SimpleCache()
+CACHE_TIMEOUT = 60
+
 from resultsdb_api import ResultsDBapi, ResultsDBapiException
-
-rdb_api = None
-
+RDB_API = None
 
 main = Blueprint('main', __name__)
 
 @app.before_first_request
 def before_first_request():
-    global rdb_api
-    rdb_api = ResultsDBapi(app.config['RDB_URL'])
+    global RDB_API
+    RDB_API = ResultsDBapi(app.config['RDB_URL'])
 
 @main.route('/')
 @main.route('/index')
 def index():
-     return redirect(url_for('main.results'))
+    return redirect(url_for('main.results'))
+
+@main.route('/testcase_tokenizer')
+def testcase_tokenizer():
+    global CACHE
+
+    cached = CACHE.get("tokenized_testcases")
+    if cached is not None:
+        return cached
+
+    tc_names = [tc['name'] for tc in RDB_API.get_testcases()['data']]
+    data = sorted(tc_names, key=lambda x: (x.count('.'), x))
+
+    response = Response(response=json.dumps(data), status=200, mimetype="application/json")
+    CACHE.set("tokenized_testcases", response, CACHE_TIMEOUT)
+    return response
 
 @main.route('/groups')
 def groups():
-    groups = rdb_api.get_groups(**dict(request.args))
+    groups = RDB_API.get_groups(**dict(request.args))
     return render_template('groups.html', groups = groups)
 
 @main.route('/groups/<group_id>')
 def group(group_id):
     try:
-        group = rdb_api.get_group(group_id)
+        group = RDB_API.get_group(group_id)
     except ResultsDBapiException as e:
         return str(e)
     groups = dict(prev = None, next = None, data = [group])
@@ -54,7 +72,7 @@ def group(group_id):
 @main.route('/results')
 def results():
     args = dict(request.args)
-    results = rdb_api.get_results(**args)
+    results = RDB_API.get_results(**args)
     for result in results['data']:
         result['groups'] = (len(result['groups']), ','.join(result['groups']))
     return render_template('results.html', results = results)
@@ -62,7 +80,7 @@ def results():
 @main.route('/results/<result_id>')
 def result(result_id):
     try:
-        result = rdb_api.get_result(id = result_id)
+        result = RDB_API.get_result(id = result_id)
     except ResultsDBapiException as e:
         return str(e)
     result['groups'] = (len(result['groups']), ','.join(result['groups']))
@@ -71,13 +89,13 @@ def result(result_id):
 @main.route('/testcases')
 def testcases():
     args = dict(request.args)
-    tcs = rdb_api.get_testcases(**args)
+    tcs = RDB_API.get_testcases(**args)
     return render_template('testcases.html', testcases = tcs)
 
 @main.route('/testcases/<testcase_name>')
 def testcase(testcase_name):
     try:
-        tc = rdb_api.get_testcase(name = testcase_name)
+        tc = RDB_API.get_testcase(name = testcase_name)
     except ResultsDBapiException as e:
         return str(e)
     tcs = dict(prev = None, next = None, data = [tc])
