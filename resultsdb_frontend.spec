@@ -10,7 +10,6 @@ Source0:        https://qadevel.cloud.fedoraproject.org/releases/%{name}/%{name}
 BuildArch:      noarch
 
 Requires:       python-flask
-Requires:       python-flask-wtf
 Requires:       python2-flask-restful
 Requires:       python2-iso8601
 Requires:       python-resultsdb_api
