@@ -24,6 +24,7 @@ from flask import Flask, render_template
 from resultsdb_frontend import proxy
 
 import logging
+import logging.handlers
 import os
 
 # the version as used in setup.py
