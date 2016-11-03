@@ -1,6 +1,6 @@
 Name:           resultsdb_frontend
-Version:        1.1.9
-Release:        4%{?dist}
+Version:        1.2.0
+Release:        1%{?dist}
 Summary:        Frontend for the ResultsDB
 
 License:        GPLv2+
@@ -50,6 +50,9 @@ install -p -m 0644 conf/settings.py.example %{buildroot}%{_sysconfdir}/resultsdb
 %{_datadir}/resultsdb_frontend/*
 
 %changelog
+* Thu Nov 3 2016 Tim FLink <tflink@fedoraproject.org> - 1.2.0-1
+- add support for resultsdb v2.0
+
 * Mon Sep 26 2016 Martin Krizek <mkrizek@redhat.com> - 1.1.9-4
 - preserve timestamps on installed files
 
