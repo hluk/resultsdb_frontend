@@ -24,10 +24,11 @@ from flask import Flask, render_template
 from resultsdb_frontend import proxy
 
 import logging
+import logging.handlers
 import os
 
 # the version as used in setup.py
-__version__ = "1.1.9"
+__version__ = "1.2.0"
 
 # Flask App
 app = Flask(__name__)
@@ -47,7 +48,7 @@ elif os.getenv('TEST') == 'true':
     default_config_file = os.getcwd() + '/conf/settings.py'
 else:
     default_config_obj = 'resultsdb_frontend.config.ProductionConfig'
-    default_config_file = '/etc/resultsdb/settings.py'
+    default_config_file = '/etc/resultsdb_frontend/settings.py'
 
 app.config.from_object(default_config_obj)
 

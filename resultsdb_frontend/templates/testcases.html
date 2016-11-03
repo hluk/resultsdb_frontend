@@ -6,15 +6,15 @@
       <tr>
         <th>Name</th>
         <th>Results</th>
-        <th>Description</th>
+        <th>Info</th>
       </tr>
     </thead>
     <tbody>
     {% for testcase in testcases.data %}
       <tr>
         <td>{{ testcase.name }}</td>
-        <td><a href="{{ url_for('main.results', testcase_name = testcase.name) }}">Results</a></td>
-        <td><a href="{{ testcase.url }}">Ref &rarr;</a></td>
+        <td><a href="{{ url_for('main.results', testcases = testcase.name) }}">Results</a></td>
+        <td><a href="{{ testcase.url }}">Link &rarr;</a></td>
       </tr>
     {% endfor %}
     </tbody>

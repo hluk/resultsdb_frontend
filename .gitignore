@@ -10,3 +10,4 @@ conf/settings.py
 *dist/
 *.egg*
 /env*/
+.idea

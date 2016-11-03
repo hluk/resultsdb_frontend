@@ -1,10 +1,5 @@
-%if ! (0%{?fedora} > 12 || 0%{?rhel} > 5)
-%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
-%{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
-%endif
-
 Name:           resultsdb_frontend
-Version:        1.1.9
+Version:        1.2.0
 Release:        1%{?dist}
 Summary:        Frontend for the ResultsDB
 
@@ -15,12 +10,12 @@ Source0:        https://qadevel.cloud.fedoraproject.org/releases/%{name}/%{name}
 BuildArch:      noarch
 
 Requires:       python-flask
-Requires:       python-flask-wtf
-Requires:       python-flask-restful
+Requires:       python2-flask-restful
+Requires:       python2-iso8601
+Requires:       python-resultsdb_api
 Requires:       python-six
-Requires:       python-iso8601
-Requires:       resultsdb_api
-BuildRequires:  python2-devel python-setuptools
+BuildRequires:  python2-devel
+BuildRequires:  python2-setuptools
 
 %description
 ResultsDB fronted is a simple application that
@@ -30,23 +25,24 @@ allows browsing the data stored inside ResultsDB.
 %setup -q
 
 %build
-%{__python2} setup.py build
+%py2_build
 
 %install
-%{__python2} setup.py install --skip-build --root %{buildroot}
+%py2_install
 
 # apache and wsgi settings
 mkdir -p %{buildroot}%{_datadir}/resultsdb_frontend/conf
-cp conf/resultsdb_frontend.conf %{buildroot}%{_datadir}/resultsdb_frontend/conf/.
-cp conf/resultsdb_frontend.wsgi %{buildroot}%{_datadir}/resultsdb_frontend/.
+install -p -m 0644 conf/resultsdb_frontend.conf %{buildroot}%{_datadir}/resultsdb_frontend/conf/resultsdb_frontend.conf
+install -p -m 0644 conf/resultsdb_frontend.wsgi %{buildroot}%{_datadir}/resultsdb_frontend/resultsdb_frontend.wsgi
 
 mkdir -p %{buildroot}%{_sysconfdir}/resultsdb_frontend
-install conf/settings.py.example %{buildroot}%{_sysconfdir}/resultsdb_frontend/settings.py.example
+install -p -m 0644 conf/settings.py.example %{buildroot}%{_sysconfdir}/resultsdb_frontend/settings.py
 
 %files
-%doc README.md conf/*
-%{python_sitelib}/resultsdb_frontend
-%{python_sitelib}/*.egg-info
+%doc README.md
+%license LICENSE
+%{python2_sitelib}/resultsdb_frontend
+%{python2_sitelib}/*.egg-info
 
 %dir %{_sysconfdir}/resultsdb_frontend
 %{_sysconfdir}/resultsdb_frontend/*
@@ -54,6 +50,20 @@ install conf/settings.py.example %{buildroot}%{_sysconfdir}/resultsdb_frontend/s
 %{_datadir}/resultsdb_frontend/*
 
 %changelog
+* Thu Nov 3 2016 Tim FLink <tflink@fedoraproject.org> - 1.2.0-1
+- add support for resultsdb v2.0
+
+* Mon Sep 26 2016 Martin Krizek <mkrizek@redhat.com> - 1.1.9-4
+- preserve timestamps on installed files
+
+* Wed Sep 21 2016 Martin Krizek <mkrizek@redhat.com> - 1.1.9-3
+- use python macros for building and installing
+- use python2-* where possible
+
+* Mon Jun 13 2016 Martin Krizek <mkrizek@redhat.com> - 1.1.9-2
+- add license
+- remove not needed custom macros
+
 * Thu Dec 17 2015 Martin Krizek <mkrizek@redhat.com> - 1.1.9-1
 - cleaner search with no item specified (D566)
 - change mock root to f22
