@@ -1,6 +1,6 @@
 Name:           resultsdb_frontend
 Version:        1.2.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Frontend for the ResultsDB
 
 License:        GPLv2+
@@ -23,6 +23,10 @@ allows browsing the data stored inside ResultsDB.
 %prep
 %setup -q
 
+%check
+# for some reason, this is the only place where the files get deleted, better ideas?
+rm -f %{buildroot}%{_sysconfdir}/resultsdb_frontend/*.py{c,o}
+
 %build
 %py2_build
 
@@ -44,11 +48,15 @@ install -p -m 0644 conf/settings.py.example %{buildroot}%{_sysconfdir}/resultsdb
 %{python2_sitelib}/*.egg-info
 
 %dir %{_sysconfdir}/resultsdb_frontend
-%{_sysconfdir}/resultsdb_frontend/*
+%config(noreplace) %{_sysconfdir}/resultsdb_frontend/settings.py
+
 %dir %{_datadir}/resultsdb_frontend
 %{_datadir}/resultsdb_frontend/*
 
 %changelog
+* Thu Nov 10 2016 Martin Krizek <mkrizek@fedoraproject.org> - 1.2.0-2
+- do not replace config file
+
 * Thu Nov 3 2016 Tim FLink <tflink@fedoraproject.org> - 1.2.0-1
 - add support for resultsdb v2.0
 
