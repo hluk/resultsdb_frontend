@@ -5,7 +5,7 @@ Summary:        Frontend for the ResultsDB
 
 License:        GPLv2+
 URL:            https://bitbucket.org/fedoraqa/resultsdb_frontend
-Source0:        https://qadevel.cloud.fedoraproject.org/releases/%{name}/%{name}-%{version}.tar.gz
+Source0:        https://qa.fedoraproject.org/releases/%{name}/%{name}-%{version}.tar.gz
 
 BuildArch:      noarch
 
