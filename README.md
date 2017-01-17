@@ -4,13 +4,13 @@ ResultsDB fronted is a simple application that allows browsing the data stored i
 
 ## Repositories
 
-* ResultsDB - [Bitbucket GIT repo](https://bitbucket.org/fedoraqa/resultsdb)
-* ResultsDB Client Library - [Bitbucket GIT repo](https://bitbucket.org/fedoraqa/resultsdb_api)
+* ResultsDB - [GIT repo](https://pagure.io/taskotron/resultsdb)
+* ResultsDB Client Library - [GIT repo](https://pagure.io/taskotron/resultsdb_api)
 
 ## Quick development setup
 
 You'll need to stand up an instance of the core
-[resultsdb](https://bitbucket.org/fedoraqa/resultsdb) alongside this frontend
+[resultsdb](https://pagure.io/taskotron/resultsdb) alongside this frontend
 for it to work.
 
 First, clone the repository.

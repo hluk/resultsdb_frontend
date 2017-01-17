@@ -4,7 +4,7 @@ Release:        2%{?dist}
 Summary:        Frontend for the ResultsDB
 
 License:        GPLv2+
-URL:            https://bitbucket.org/fedoraqa/resultsdb_frontend
+URL:            https://pagure.io/taskotron/resultsdb_frontend
 Source0:        https://qa.fedoraproject.org/releases/%{name}/%{name}-%{version}.tar.gz
 
 BuildArch:      noarch
