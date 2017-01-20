@@ -14,7 +14,7 @@
       <tr>
         <td>{{ testcase.name }}</td>
         <td><a href="{{ url_for('main.results', testcases = testcase.name) }}">Results</a></td>
-        <td><a href="{{ testcase.url }}">Link &rarr;</a></td>
+        <td><a href="{{ testcase.ref_url }}">Link &rarr;</a></td>
       </tr>
     {% endfor %}
     </tbody>
