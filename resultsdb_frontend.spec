@@ -1,4 +1,5 @@
 Name:           resultsdb_frontend
+# NOTE: if you update version, *make sure* to also update `resultsdb_frontend/__init__.py`
 Version:        1.2.0
 Release:        2%{?dist}
 Summary:        Frontend for the ResultsDB
