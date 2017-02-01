@@ -47,8 +47,14 @@ def testcase_tokenizer():
     cached = CACHE.get("tokenized_testcases")
     if cached is not None:
         return cached
-
-    tc_names = [tc['name'] for tc in RDB_API.get_testcases()['data']]
+    page = 0
+    tc_names = []
+    while True:
+        names = [tc['name'] for tc in RDB_API.get_testcases(page=page, limit=100)['data']]
+        page += 1
+        tc_names.extend(names)
+        if not names:
+            break
     data = sorted(tc_names, key=lambda x: (x.count('.'), x))
 
     response = Response(response=json.dumps(data), status=200, mimetype="application/json")
