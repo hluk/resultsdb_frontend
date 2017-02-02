@@ -33,12 +33,6 @@ GITBRANCH:=$(shell git rev-parse --abbrev-ref HEAD)
 TARGETDIST:=fc25
 BUILDTARGET=fedora-25-x86_64
 
-test: $(VENV)
-	sh -c "TEST='true' . $(VENV)/bin/activate; py.test --cov $(SRC) testing/; deactivate"
-
-test-ci: $(VENV)
-	sh -c "TEST='true' . $(VENV)/bin/activate; py.test --cov-report xml --cov $(SRC) testing/; deactivate"
-
 pylint:
 	pylint -f parseable $(SRC) | tee pylint.out
 
@@ -83,5 +77,5 @@ virtualenv: $(VENV)
 
 $(VENV):
 	virtualenv --distribute --system-site-packages $(VENV)
-	sh -c ". $(VENV)/bin/activate; pip install --force-reinstall -r requirements.txt; deactivate"
+	sh -c "set -e; . $(VENV)/bin/activate; pip install --force-reinstall -r requirements.txt; deactivate"
 
