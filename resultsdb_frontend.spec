@@ -1,7 +1,7 @@
 Name:           resultsdb_frontend
 # NOTE: if you update version, *make sure* to also update `resultsdb_frontend/__init__.py`
-Version:        1.2.0
-Release:        2%{?dist}
+Version:        2.0.0
+Release:        1%{?dist}
 Summary:        Frontend for the ResultsDB
 
 License:        GPLv2+
@@ -55,6 +55,13 @@ install -p -m 0644 conf/settings.py.example %{buildroot}%{_sysconfdir}/resultsdb
 %{_datadir}/resultsdb_frontend/*
 
 %changelog
+* Thu Feb 02 2017 Kamil Páral <kparal@redhat.com> - 2.0.0-1
+- remove flask-restful dependency
+- fix testcase info links
+- point default config to resultsdb 2.0 API
+- fix search box
+- synchronize major version number with resultsdb major number
+
 * Thu Nov 10 2016 Martin Krizek <mkrizek@fedoraproject.org> - 1.2.0-2
 - do not replace config file
 
