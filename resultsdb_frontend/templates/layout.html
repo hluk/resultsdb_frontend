@@ -56,10 +56,10 @@
 
             <div class="form-group">
               <select multiple class="form-control" id="outcome" size=4>
-                  <option>PASSED</option>
-                  <option>FAILED</option>
-                  <option>INFO</option>
-                  <option>NEEDS_INSPECTION</option>
+                  <option value="PASSED">PASSED</option>
+                  <option value="FAILED">FAILED</option>
+                  <option value="INFO">INFO</option>
+                  <option value="NEEDS_INSPECTION">NEEDS_INSPECTION</option>
               </select>
             </div>
 
@@ -93,8 +93,9 @@
     <!-- Include all compiled plugins -->
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <!-- Search logic -->
-    <script src="http://twitter.github.com/typeahead.js/releases/0.11.1/typeahead.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
     <script src="{{ url_for('static', filename='js/search.js') }}"></script>
+    <div id="testcaseEndpointURL" style="display: none;">{{url_for('main.testcase_tokenizer')}}</div>
 
 
     {% if config['FEDMENU_URL'] is defined %}

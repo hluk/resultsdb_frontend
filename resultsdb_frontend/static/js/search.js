@@ -1,10 +1,11 @@
 $('document').ready(function() {
     // set up the typeahead
+    endpoint_url = $('#testcaseEndpointURL').text()
     var testcases = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.nonword,
         queryTokenizer: Bloodhound.tokenizers.nonword,
         prefetch: {
-            url: '/testcase_tokenizer',
+            url: endpoint_url,
             cache: false,
         }
     });
@@ -34,6 +35,37 @@ $('document').ready(function() {
     $('#collapseSearch').on('shown.bs.collapse', function () {
         $("#item").focus();
     })
+
+    // fill the form based on previous search
+    var qs = (function(a) {
+        if (a == "") return {};
+        var b = {};
+        for (var i = 0; i < a.length; ++i)
+        {
+            var p=a[i].split('=', 2);
+            if (p.length == 1)
+                b[p[0]] = "";
+            else
+                b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+        }
+        return b;
+    })(window.location.search.substr(1).split('&'));
+    console.log(qs);
+    if(qs['item']){
+        $("#item").val(qs['item']);
+    }
+    if(qs['item:like']){
+        $("#item").val(qs['item:like']);
+    }
+    if(qs.testcases){
+        $("#testcase").val(qs.testcases);
+    }
+    if(qs.outcome){
+        qs.outcome.split(',').forEach(function(item){
+            console.log(item);
+            $('#outcome option[value="'+item+'"]').attr('selected','selected');
+        });
+    }
 
     // Replace the submit button behaviour
     $("#searchform").submit(function(e){
@@ -78,7 +110,7 @@ $('document').ready(function() {
                 return $.trim(testcase);
             });
             testcase = testcases.join(',');
-            
+
             // construct the url
             url += "&testcases";
             if(is_like){

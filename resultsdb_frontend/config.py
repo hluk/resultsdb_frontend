@@ -23,7 +23,7 @@
 class Config(object):
     DEBUG = True
 
-    RDB_URL = 'http://localhost:5001/api/v1.0'
+    RDB_URL = 'http://localhost:5001/api/v2.0'
 
     LOGFILE = '/var/log/resultsdb_frontend/resultsdb_frontend.log'
     FILE_LOGGING = False
