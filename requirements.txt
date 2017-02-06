@@ -1,6 +1,6 @@
 # This is a list of pypi packages to be installed into virtualenv. Alternatively,
 # you can install these as RPMs instead of pypi packages. Use
-# `rpmspec -q --requires resultsdb_frontend.spec`
+# `sudo dnf builddep resultsdb.spec`
 
 # A note for maintainers: Please keep this list in sync with resultsdb.spec.
 # You should require exact versions here (in order to define an exact working
@@ -12,8 +12,6 @@
 # This list is in the same order as the requirements in the specfile.
 
 Flask == 0.10.1
-six == 1.10.0
 iso8601 == 0.1.11
-resultsdb_api
-
-simplejson == 3.7.3
+resultsdb_api >= 2.0
+six == 1.10.0

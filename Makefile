@@ -33,17 +33,22 @@ GITBRANCH:=$(shell git rev-parse --abbrev-ref HEAD)
 TARGETDIST:=fc25
 BUILDTARGET=fedora-25-x86_64
 
+.PHONY: pylint
 pylint:
 	pylint -f parseable $(SRC) | tee pylint.out
 
+.PHONY: pep8
 pep8:
 	pep8 $(SRC)/*.py $(SRC)/*/*.py | tee pep8.out
 
+.PHONY: ci
 ci: test-ci pylint pep8
 
+.PHONY: docs
 docs:
 	sphinx-build  -b html -d docs/_build/doctrees docs/source docs/_build/html
 
+.PHONY: clean
 clean:
 	rm -rf dist
 	rm -rf resultsdb_frontend.egg-info
@@ -51,31 +56,39 @@ clean:
 	rm -f pep8.out
 	rm -f pylint.out
 
+.PHONY: archive
 archive: $(SRC)-$(VERSION).tar.gz
 
+.PHONY: $(SRC)-$(VERSION).tar.gz
 $(SRC)-$(VERSION).tar.gz:
 	git archive $(GITBRANCH) --prefix=$(SRC)-$(VERSION)/ | gzip -c9 > $@
 
+.PHONY: mocksrpm
 mocksrpm: archive
 	mock -r $(BUILDTARGET) --buildsrpm --spec $(SPECFILE) --sources .
 	cp /var/lib/mock/$(BUILDTARGET)/result/$(NVR).$(TARGETDIST).src.rpm .
 
+.PHONY: mockbuild
 mockbuild: mocksrpm
 	mock -r $(BUILDTARGET) --no-clean --rebuild $(NVR).$(TARGETDIST).src.rpm
 	cp /var/lib/mock/$(BUILDTARGET)/result/$(NVR).$(TARGETDIST).noarch.rpm .
 
+#.PHONY: kojibuild
 #kojibuild: mocksrpm
 #	koji build --scratch dist-6E-epel-testing-candidate $(NVR).$(TARGETDIST).src.rpm
 
+.PHONY: nvr
 nvr:
 	@echo $(NVR)
 
+.PHONY: cleanvenv
 cleanvenv:
 	rm -rf $(VENV)
 
+.PHONY: virtualenv
 virtualenv: $(VENV)
 
+.PHONY: $(VENV)
 $(VENV):
-	virtualenv --distribute --system-site-packages $(VENV)
-	sh -c "set -e; . $(VENV)/bin/activate; pip install --force-reinstall -r requirements.txt; deactivate"
-
+	virtualenv $(VENV)
+	sh -c "set -e; . $(VENV)/bin/activate; pip install -r requirements.txt; deactivate"

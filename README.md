@@ -27,7 +27,7 @@ Run the server:
     $ DEV=true python runapp.py
 
 The ResultsDB frontend is now running at <http://localhost:5002>. It expects
-the ResultsDB server to be available at <http://localhost:5001/api/v1.0>.
+the ResultsDB server to be available at <http://localhost:5001/api/v2.0>.
 
 ## Adjusting configuration
 
