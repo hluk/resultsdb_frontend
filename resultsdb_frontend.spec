@@ -1,7 +1,7 @@
 Name:           resultsdb_frontend
 # NOTE: if you update version, *make sure* to also update `resultsdb_frontend/__init__.py`
 Version:        2.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Frontend for the ResultsDB
 
 License:        GPLv2+
@@ -12,7 +12,7 @@ BuildArch:      noarch
 
 Requires:       python-flask
 Requires:       python2-iso8601
-Requires:       python-resultsdb_api
+Requires:       python-resultsdb_api >= 2.0.0
 Requires:       python-six
 BuildRequires:  python2-devel
 BuildRequires:  python2-setuptools
@@ -55,6 +55,9 @@ install -p -m 0644 conf/settings.py.example %{buildroot}%{_sysconfdir}/resultsdb
 %{_datadir}/resultsdb_frontend/*
 
 %changelog
+* Wed Feb 08 2017 Martin Krizek <mkrizek@redhat.com> - 2.0.0-2
+- require python-resultsdb_api >= 2.0.0
+
 * Thu Feb 02 2017 Kamil Páral <kparal@redhat.com> - 2.0.0-1
 - remove flask-restful dependency
 - fix testcase info links
