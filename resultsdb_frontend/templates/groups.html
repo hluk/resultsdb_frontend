@@ -21,8 +21,17 @@
             {{ group.uuid }}
           {% endif %}
         </td>
-        <td><a href="{{ url_for('main.results', groups = group.uuid) }}">{{ group.results_count }} results</a></td>
-        <td><a href="{{ group.ref_url }}">Link &rarr;</a></td>
+        <td>
+          {% if group.results_count > 0 %}
+            <a href="{{ url_for('main.results', groups = group.uuid) }}">{{ group.results_count }} results</a>
+          {% else %}
+            0 results
+          {% endif %}
+        </td>
+        <td>
+          {% if group.ref_url %}
+            <a href="{{ group.ref_url }}">Link &rarr;</a></td>
+          {% endif %}
       </tr>
     {% endfor %}
     </tbody>
