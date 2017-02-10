@@ -17,7 +17,7 @@ First, clone the repository.
 
 Then, setup a virtual environment for development:
 
-    $ sudo dnf install python-virtualenv
+    $ sudo dnf install python-virtualenv python-pip
     $ virtualenv env_resultsdb_frontend
     $ source env_resultsdb_frontend/bin/activate
     $ pip install -r requirements.txt
