@@ -25,7 +25,8 @@ allows browsing the data stored inside ResultsDB.
 %setup -q
 
 %check
-# for some reason, this is the only place where the files get deleted, better ideas?
+# This seems to be the only place where we can remove pyco files, see:
+# https://fedoraproject.org/wiki/Packaging:Python#Byte_compiling
 rm -f %{buildroot}%{_sysconfdir}/resultsdb_frontend/*.py{c,o}
 
 %build
