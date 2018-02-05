@@ -1,7 +1,7 @@
 Name:           resultsdb_frontend
 # NOTE: if you update version, *make sure* to also update `resultsdb_frontend/__init__.py`
 Version:        2.0.0
-Release:        2%{?dist}
+Release:        4%{?dist}
 Summary:        Frontend for the ResultsDB
 
 License:        GPLv2+
@@ -10,10 +10,10 @@ Source0:        https://qa.fedoraproject.org/releases/%{name}/%{name}-%{version}
 
 BuildArch:      noarch
 
-Requires:       python-flask
+Requires:       python2-flask
 Requires:       python2-iso8601
-Requires:       python-resultsdb_api >= 2.0.0
-Requires:       python-six
+Requires:       python2-resultsdb_api
+Requires:       python2-six
 BuildRequires:  python2-devel
 BuildRequires:  python2-setuptools
 
@@ -25,8 +25,7 @@ allows browsing the data stored inside ResultsDB.
 %setup -q
 
 %check
-# This seems to be the only place where we can remove pyco files, see:
-# https://fedoraproject.org/wiki/Packaging:Python#Byte_compiling
+# for some reason, this is the only place where the files get deleted, better ideas?
 rm -f %{buildroot}%{_sysconfdir}/resultsdb_frontend/*.py{c,o}
 
 %build
@@ -56,8 +55,15 @@ install -p -m 0644 conf/settings.py.example %{buildroot}%{_sysconfdir}/resultsdb
 %{_datadir}/resultsdb_frontend/*
 
 %changelog
-* Wed Feb 08 2017 Martin Krizek <mkrizek@redhat.com> - 2.0.0-2
-- require python-resultsdb_api >= 2.0.0
+* Wed Jan 31 2018 Iryna Shcherbina <ishcherb@redhat.com> - 2.0.0-4
+- Update Python 2 dependency declarations to new packaging standards
+  (See https://fedoraproject.org/wiki/FinalizingFedoraSwitchtoPython3)
+
+* Thu Jul 27 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2.0.0-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
+
+* Sat Feb 11 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2.0.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
 * Thu Feb 02 2017 Kamil Páral <kparal@redhat.com> - 2.0.0-1
 - remove flask-restful dependency
