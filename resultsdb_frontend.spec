@@ -1,7 +1,7 @@
 Name:           resultsdb_frontend
 # NOTE: if you update version, *make sure* to also update `resultsdb_frontend/__init__.py`
-Version:        2.0.0
-Release:        4%{?dist}
+Version:        2.1.0
+Release:        1%{?dist}
 Summary:        Frontend for the ResultsDB
 
 License:        GPLv2+
@@ -55,6 +55,10 @@ install -p -m 0644 conf/settings.py.example %{buildroot}%{_sysconfdir}/resultsdb
 %{_datadir}/resultsdb_frontend/*
 
 %changelog
+* Wed Apr 25 2018 Frantisek Zatloukal <fzatlouk@redhat.com> - 2.1.0-1
+- Fix default wildcard search in frontend (100x spedup)
+- Improve experience when an optional parameter is not defined on results
+
 * Wed Jan 31 2018 Iryna Shcherbina <ishcherb@redhat.com> - 2.0.0-4
 - Update Python 2 dependency declarations to new packaging standards
   (See https://fedoraproject.org/wiki/FinalizingFedoraSwitchtoPython3)
