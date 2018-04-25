@@ -1,19 +1,13 @@
 # This is a list of pypi packages to be installed into virtualenv. Alternatively,
-# you can install these as RPMs instead of pypi packages. Use
-# `rpmspec -q --requires resultsdb_frontend.spec`
+# you can install these as RPMs instead of pypi packages. See the dependecies
+# with:
+# $ rpmspec -q --requires resultsdb.spec
+# $ rpmspec -q --buildrequires resultsdb.spec
 
-# A note for maintainers: Please keep this list in sync with resultsdb.spec.
-# You should require exact versions here (in order to define an exact working
-# environment), and require a minimal version in the spec file (in order to allow
-# the libraries to have some minor version bumps during the Fedora release
-# lifecycle). If the Fedora libraries span multiple versions across releases,
-# you can define a dependency range here instead of an exact version.
+# A note for maintainers: Please keep this list in sync and in the same order
+# as the spec file.
 
-# This list is in the same order as the requirements in the specfile.
-
-Flask == 0.10.1
-six == 1.10.0
-iso8601 == 0.1.11
-resultsdb_api
-
-simplejson == 3.7.3
+Flask >= 0.10.1
+iso8601 >= 0.1.11
+resultsdb_api >= 2.0
+six >= 1.10.0

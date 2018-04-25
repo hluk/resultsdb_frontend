@@ -88,7 +88,7 @@ $('document').ready(function() {
                     item_query += item + ",";
                 } else {
                     //substring match
-                    item_query += "*" + item + "*,";
+                    item_query += item + "*,";
                 }
             }
         });

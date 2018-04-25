@@ -1,8 +1,0 @@
-[tflink-taskotron]
-name=Copr repo for taskotron owned by tflink
-baseurl=https://copr-be.cloud.fedoraproject.org/results/tflink/taskotron/fedora-$releasever-$basearch/
-skip_if_unavailable=True
-gpgcheck=1
-gpgkey=https://copr-be.cloud.fedoraproject.org/results/tflink/taskotron/pubkey.gpg
-enabled=1
-enabled_metadata=1

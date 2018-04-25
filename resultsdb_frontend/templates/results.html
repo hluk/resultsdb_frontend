@@ -23,22 +23,24 @@
         <td>
           {% if result.data.item %}
               {{ ",".join(result.data.item) }}
-          {% else %}
-              -
           {% endif %}
         </td>
         <td>
           {% if result.note %}
               {{ result.note }}
-          {% else %}
-              &nbsp;
           {% endif %}
         </td>
         <td><a href="{{ url_for('main.result', result_id=result.id) }}">Details</a></td>
         <td>
-          <a href="{{ url_for('main.groups', uuid=result.groups[1])}}">In {{result.groups[0]}} group{%if result.groups[0] != 1%}s{%endif%} &rarr;</a>
+          {% if result.groups[0] %}
+              <a href="{{ url_for('main.groups', uuid=result.groups[1])}}">In {{result.groups[0]}} group{%if result.groups[0] != 1%}s{%endif%} &rarr;</a>
+          {% endif %}
         </td>
-        <td><a href="{{ result.ref_url }}">Link &rarr;</a></td>
+        <td>
+          {% if result.ref_url %}
+              <a href="{{ result.ref_url }}">Link &rarr;</a>
+          {% endif %}
+        </td>
       </tr>
     {% endfor %}
     </tbody>
