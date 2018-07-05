@@ -5,6 +5,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <!-- Bootstrap -->
       <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
       <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
   </head>
 
@@ -63,6 +64,10 @@
               </select>
             </div>
 
+            <div class="form-group">
+              <input class="form-control" id="searchrange" value=""></input>
+            </div>
+
             <button type="submit" class="btn btn-default" id="go">Go!</button>
           </form>
         </div>
@@ -94,6 +99,8 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <!-- Search logic -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>"
     <script src="{{ url_for('static', filename='js/search.js') }}"></script>
     <div id="testcaseEndpointURL" style="display: none;">{{url_for('main.testcase_tokenizer')}}</div>
 
