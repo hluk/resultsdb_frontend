@@ -71,35 +71,15 @@ $('document').ready(function() {
         });
     }
     if(qs.since){
-        switch(qs.since){
-            case moment().format('YYYY-MM-DD'):
-                start = moment();
-                end = moment();
-                since = start.format('YYYY-MM-DD');
-                console.log('Today');
-                break;
-            case moment().subtract(6, 'days').format('YYYY-MM-DD'):
-                start = moment().subtract(6, 'days');
-                end = moment();
-                since = start.format('YYYY-MM-DD');
-                console.log('Last 7 Days');
-                break;
-            case moment().subtract(29, 'days').format('YYYY-MM-DD'):
-                start = moment().subtract(29, 'days');
-                end = moment();
-                since = start.format('YYYY-MM-DD');
-                break;
-            default:
-                dates = qs.since.split(',');
-                start = moment(dates[0], 'YYYY-MM-DD');
-                if(dates.length > 0)
-                {
-                    end = moment(dates[1], 'YYYY-MM-DD').subtract(1, 'days');
-                }
-                since = qs.since;
-                break;
+        dates = qs.since.split(',');
+        start = moment(dates[0], 'YYYY-MM-DD');
+        end = moment();
+        if (dates.length > 1){
+            end = moment(dates[1], 'YYYY-MM-DD').subtract(1, 'days');
         }
-    }else{
+        since = qs.since;
+    }
+    else {
         start = moment().subtract(29, 'days');
         end = moment();
         since = start.format('YYYY-MM-DD') + ',' + end.format('YYYY-MM-DD');
