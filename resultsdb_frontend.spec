@@ -1,6 +1,6 @@
 Name:           resultsdb_frontend
 # NOTE: if you update version, *make sure* to also update `resultsdb_frontend/__init__.py`
-Version:        2.1.0
+Version:        2.1.1
 Release:        1%{?dist}
 Summary:        Frontend for the ResultsDB
 
@@ -10,12 +10,12 @@ Source0:        https://qa.fedoraproject.org/releases/%{name}/%{name}-%{version}
 
 BuildArch:      noarch
 
-Requires:       python2-flask
-Requires:       python2-iso8601
-Requires:       python2-resultsdb_api
-Requires:       python2-six
-BuildRequires:  python2-devel
-BuildRequires:  python2-setuptools
+Requires:       python3-flask
+Requires:       python3-iso8601
+Requires:       python3-resultsdb_api
+Requires:       python3-six
+BuildRequires:  python3-devel
+BuildRequires:  python3-setuptools
 
 %description
 ResultsDB fronted is a simple application that
@@ -29,10 +29,10 @@ allows browsing the data stored inside ResultsDB.
 rm -f %{buildroot}%{_sysconfdir}/resultsdb_frontend/*.py{c,o}
 
 %build
-%py2_build
+%py3_build
 
 %install
-%py2_install
+%py3_install
 
 # apache and wsgi settings
 mkdir -p %{buildroot}%{_datadir}/resultsdb_frontend/conf
@@ -45,8 +45,8 @@ install -p -m 0644 conf/settings.py.example %{buildroot}%{_sysconfdir}/resultsdb
 %files
 %doc README.md
 %license LICENSE
-%{python2_sitelib}/resultsdb_frontend
-%{python2_sitelib}/*.egg-info
+%{python3_sitelib}/resultsdb_frontend
+%{python3_sitelib}/*.egg-info
 
 %dir %{_sysconfdir}/resultsdb_frontend
 %config(noreplace) %{_sysconfdir}/resultsdb_frontend/settings.py
@@ -55,6 +55,14 @@ install -p -m 0644 conf/settings.py.example %{buildroot}%{_sysconfdir}/resultsdb
 %{_datadir}/resultsdb_frontend/*
 
 %changelog
+* Tue Nov 27 2018 Frantisek Zatloukal <fzatlouk@redhat.com> - 2.1.1-1
+- Use Python 3
+- Limit searches by time by default and setting in the search UI
+- Handle exceptions from resultdb_api gracefully
+
+* Sat Jul 14 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2.1.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
+
 * Wed Apr 25 2018 Frantisek Zatloukal <fzatlouk@redhat.com> - 2.1.0-1
 - Fix default wildcard search in frontend (100x spedup)
 - Improve experience when an optional parameter is not defined on results

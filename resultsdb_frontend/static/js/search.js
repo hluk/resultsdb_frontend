@@ -10,6 +10,10 @@ $('document').ready(function() {
         }
     });
 
+    var start;
+    var end;
+    var since;
+
     $('#testcase').typeahead({
         hint: true,
         highlight: true,
@@ -66,6 +70,39 @@ $('document').ready(function() {
             $('#outcome option[value="'+item+'"]').attr('selected','selected');
         });
     }
+    if(qs.since){
+        dates = qs.since.split(',');
+        start = moment(dates[0], 'YYYY-MM-DD');
+        end = moment();
+        if (dates.length > 1){
+            end = moment(dates[1], 'YYYY-MM-DD').subtract(1, 'days');
+        }
+        since = qs.since;
+    }
+    else {
+        start = moment().subtract(29, 'days');
+        end = moment();
+        since = start.format('YYYY-MM-DD') + ',' + end.format('YYYY-MM-DD');
+    }
+
+    $("#searchrange").daterangepicker({
+        startDate: start,
+        endDate: end,
+        ranges: {
+           'Today': [moment(), moment()],
+           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+        }
+    }, function(start, end, label) {
+        if (label === 'Custom Range'){
+            //$('#searchrange').val(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            since = start.format('YYYY-MM-DD') + ',' + end.add(1, 'days').format('YYYY-MM-DD');
+        }
+        else{
+            $('#searchrange').val(label);
+            since = start.format('YYYY-MM-DD');
+        }
+    })
 
     // Replace the submit button behaviour
     $("#searchform").submit(function(e){
@@ -120,6 +157,8 @@ $('document').ready(function() {
         }
         if(outcome)
             url += "&outcome="+outcome;
+        
+        url += "&since="+since;
 
         console.log(url);
         window.location.href = encodeURI(url);

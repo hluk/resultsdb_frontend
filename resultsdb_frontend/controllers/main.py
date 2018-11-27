@@ -63,7 +63,10 @@ def testcase_tokenizer():
 
 @main.route('/groups')
 def groups():
-    groups = RDB_API.get_groups(**dict(request.args))
+    try:
+        groups = RDB_API.get_groups(**dict(request.args))
+    except ResultsDBapiException as e:
+        return str(e)
     return render_template('groups.html', groups = groups)
 
 @main.route('/groups/<group_id>')
@@ -78,7 +81,10 @@ def group(group_id):
 @main.route('/results')
 def results():
     args = dict(request.args)
-    results = RDB_API.get_results(**args)
+    try:
+        results = RDB_API.get_results(**args)
+    except ResultsDBapiException as e:
+        return str(e)
     for result in results['data']:
         result['groups'] = (len(result['groups']), ','.join(result['groups']))
     return render_template('results.html', results = results)
@@ -89,7 +95,10 @@ def result(result_id):
         result = RDB_API.get_result(id = result_id)
     except ResultsDBapiException as e:
         return str(e)
-    result['groups'] = (len(result['groups']), ','.join(result['groups']))
+    try:
+        result['groups'] = (len(result['groups']), ','.join(result['groups']))
+    except KeyError as e:
+        result['groups'] = (0, '')
     return render_template('result_detail.html', result = result)
 
 @main.route('/testcases')
