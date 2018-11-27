@@ -73,7 +73,7 @@ def setup_logging():
     root_logger.setLevel(logging.DEBUG)
 
     if app.config['STREAM_LOGGING']:
-        print "doing stream logging"
+        print("doing stream logging")
         stream_handler = logging.StreamHandler()
         stream_handler.setLevel(loglevel)
         stream_handler.setFormatter(formatter)
@@ -81,7 +81,7 @@ def setup_logging():
         app.logger.addHandler(stream_handler)
 
     if app.config['SYSLOG_LOGGING']:
-        print "doing syslog logging"
+        print("doing syslog logging")
         syslog_handler = logging.handlers.SysLogHandler(address='/dev/log',
                             facility=logging.handlers.SysLogHandler.LOG_LOCAL4)
         syslog_handler.setLevel(loglevel)
@@ -90,7 +90,7 @@ def setup_logging():
         app.logger.addHandler(syslog_handler)
 
     if app.config['FILE_LOGGING'] and app.config['LOGFILE']:
-        print "doing file logging to %s" % app.config['LOGFILE']
+        print("doing file logging to %s" % app.config['LOGFILE'])
         file_handler = logging.handlers.RotatingFileHandler(app.config['LOGFILE'], maxBytes=500000, backupCount=5)
         file_handler.setLevel(loglevel)
         file_handler.setFormatter(formatter)
