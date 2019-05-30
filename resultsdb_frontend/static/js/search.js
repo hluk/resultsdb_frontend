@@ -75,15 +75,14 @@ $('document').ready(function() {
         start = moment(dates[0], 'YYYY-MM-DD');
         end = moment();
         if (dates.length > 1){
-            end = moment(dates[1], 'YYYY-MM-DD').subtract(1, 'days');
+            end = moment(dates[1], 'YYYY-MM-DD');
         }
-        since = qs.since;
     }
     else {
         start = moment().subtract(29, 'days');
         end = moment();
-        since = start.format('YYYY-MM-DD') + ',' + end.format('YYYY-MM-DD');
     }
+    since = start.format('YYYY-MM-DD') + 'T00:00:00,' + end.format('YYYY-MM-DD') + 'T23:59:59';
 
     $("#searchrange").daterangepicker({
         startDate: start,
@@ -96,11 +95,11 @@ $('document').ready(function() {
     }, function(start, end, label) {
         if (label === 'Custom Range'){
             //$('#searchrange').val(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-            since = start.format('YYYY-MM-DD') + ',' + end.add(1, 'days').format('YYYY-MM-DD');
+            since = start.format('YYYY-MM-DD') + 'T00:00:00,' + end.format('YYYY-MM-DD') + 'T23:59:59';
         }
         else{
             $('#searchrange').val(label);
-            since = start.format('YYYY-MM-DD');
+            since = start.format('YYYY-MM-DD') + 'T00:00:00,' + end.format('YYYY-MM-DD') + 'T23:59:59';
         }
     })
 
