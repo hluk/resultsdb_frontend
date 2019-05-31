@@ -1,6 +1,6 @@
 Name:           resultsdb_frontend
 # NOTE: if you update version, *make sure* to also update `resultsdb_frontend/__init__.py`
-Version:        2.1.1
+Version:        2.1.2
 Release:        1%{?dist}
 Summary:        Frontend for the ResultsDB
 
@@ -55,6 +55,12 @@ install -p -m 0644 conf/settings.py.example %{buildroot}%{_sysconfdir}/resultsdb
 %{_datadir}/resultsdb_frontend/*
 
 %changelog
+* Fri May 31 2019 Frantisek Zatloukal <fzatlouk@redhat.com> - 2.1.2-1
+- Fix default search doesn't show today's results
+
+* Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 2.1.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
+
 * Tue Nov 27 2018 Frantisek Zatloukal <fzatlouk@redhat.com> - 2.1.1-1
 - Use Python 3
 - Limit searches by time by default and setting in the search UI
