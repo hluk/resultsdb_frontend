@@ -22,6 +22,7 @@
 
 from flask import Flask, render_template
 from resultsdb_frontend import proxy
+from resultsdb_frontend.exceptions import ContainerConfigIncompleteError
 
 import logging
 import logging.handlers
@@ -56,10 +57,6 @@ config_file = os.environ.get('RESULTSDB_FRONTEND_CONFIG', default_config_file)
 
 if os.path.exists(config_file):
     app.config.from_pyfile(config_file)
-
-if app.config['PRODUCTION']:
-    if app.secret_key == 'replace-me-with-something-random':
-        raise Warning("You need to change the app.secret_key value for production")
 
 # setup logging
 fmt = '[%(filename)s:%(lineno)d] ' if app.debug else '%(module)-12s '
@@ -98,6 +95,34 @@ def setup_logging():
         app.logger.addHandler(file_handler)
 
 setup_logging()
+
+# Is this a Container deployment?
+container_env = os.getenv('RDB_FE_ENVIRONMENT')
+if container_env:
+    if container_env not in ("stg","prod"):
+        app.logger.error("RDB_FE_ENVIRONMENT env variable set to a wrong value. Allowed values are: stg/prod")
+        raise ContainerConfigIncompleteError("RDB_FE_ENVIRONMENT invalid")
+
+    if container_env == "stg":
+        app.config["DEBUG"] = True
+        app.config["PRODUCTION"] = False
+
+    elif not os.getenv('RDB_FE_SECRET_KEY'):
+        app.logger.error("Container mode enabled but required env variable RDB_FE_SECRET_KEY is not set.")
+        raise ContainerConfigIncompleteError("RDB_FE_SECRET_KEY missing")
+
+    if not os.getenv("RDB_FE_RDB_URL"):
+        app.logger.warning("Using default RDB URL %s as RDB_FE_RDB_URL env variable is not set." % app.config["RDB_URL"])
+
+# Allow to load some config options from env vars
+if os.getenv('RDB_FE_SECRET_KEY'):
+    app.config["SECRET_KEY"] = os.getenv('RDB_FE_SECRET_KEY')
+if os.getenv("RDB_FE_RDB_URL"):
+    app.config["RDB_URL"] = os.getenv("RDB_FE_RDB_URL")
+
+if app.config['PRODUCTION']:
+    if app.secret_key == 'replace-me-with-something-random':
+        raise Warning("You need to change the app.secret_key value for production")
 
 # register blueprints
 from resultsdb_frontend.controllers.main import main
