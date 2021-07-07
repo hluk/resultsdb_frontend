@@ -21,7 +21,7 @@ import json
 from flask import Blueprint, render_template, redirect, url_for, request, Response
 from resultsdb_frontend import app
 
-from werkzeug.contrib.cache import SimpleCache
+from cachelib.simple import SimpleCache
 CACHE = SimpleCache()
 CACHE_TIMEOUT = 60
 

@@ -10,6 +10,7 @@ Source0:        https://qa.fedoraproject.org/releases/%{name}/%{name}-%{version}
 
 BuildArch:      noarch
 
+Requires:       python3-cachelib
 Requires:       python3-flask
 Requires:       python3-iso8601
 Requires:       python3-resultsdb_api
