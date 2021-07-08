@@ -2,7 +2,7 @@
 # Build should be triggered from repo root like:
 # docker build -f Dockerfile --tag <IMAGE_TAG>
 
-FROM registry.fedoraproject.org/fedora:32
+FROM registry.fedoraproject.org/fedora:34
 LABEL \
     name="ResultsDB_frontend application" \
     vendor="ResultsDB_frontend developers" \
@@ -21,7 +21,7 @@ COPY ./resultsdb_frontend.spec /opt/app-root/src/resultsdb_frontend/resultsdb_fr
 RUN dnf -y install findutils rpm-build python3-pip python3-mod_wsgi httpd \
     && rpm --query --requires --specfile /opt/app-root/src/resultsdb_frontend/resultsdb_frontend.spec | xargs -d '\n' dnf -y install \
     && dnf -y clean all
- 
+
 COPY . /opt/app-root/src/resultsdb_frontend/
 # install using --no-deps option to ensure nothing comes from PyPi
 RUN pip3 install --no-deps /opt/app-root/src/resultsdb_frontend
