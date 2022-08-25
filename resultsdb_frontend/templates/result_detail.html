@@ -11,7 +11,7 @@
 </div>
 <div class="row">
     <div class="col-md-2"><strong>Testcase</strong></div>
-    <div class="col-md-9"><a href="{{ url_for('main.testcase', testcase_name=result.testcase.href.split('/')[-1]) }}">{{ result.testcase.name }}</a></div>
+    <div class="col-md-9"><a href="{{ url_for('main.testcase', testcase_name=result.testcase.name) }}">{{ result.testcase.name }}</a></div>
 </div>
 <div class="row">
     <div class="col-md-2"><strong>Outcome</strong></div>
