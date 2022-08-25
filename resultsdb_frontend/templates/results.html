@@ -18,7 +18,7 @@
     {% for result in results.data %}
       <tr>
         <td>{{ result.submit_time | replace("T", " ")}}</td>
-        <td><a href="{{ url_for('main.testcase', testcase_name=result.testcase.href.split('/')[-1]) }}">{{ result.testcase.name }}</a></td>
+        <td><a href="{{ url_for('main.testcase', testcase_name=result.testcase.name) }}">{{ result.testcase.name }}</a></td>
         <td>{{ result.outcome }}</td>
         <td>
           {% if result.data.item %}

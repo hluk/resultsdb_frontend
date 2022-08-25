@@ -107,7 +107,7 @@ def testcases():
     tcs = RDB_API.get_testcases(**args)
     return render_template('testcases.html', testcases = tcs)
 
-@main.route('/testcases/<testcase_name>')
+@main.route('/testcases/<path:testcase_name>')
 def testcase(testcase_name):
     try:
         tc = RDB_API.get_testcase(name = testcase_name)
