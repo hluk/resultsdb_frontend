@@ -2,7 +2,7 @@
 # Build should be triggered from repo root like:
 # docker build -f Dockerfile --tag <IMAGE_TAG>
 
-FROM registry.fedoraproject.org/fedora:36
+FROM registry.fedoraproject.org/fedora:38
 LABEL \
     name="ResultsDB_frontend application" \
     vendor="ResultsDB_frontend developers" \
