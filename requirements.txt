@@ -1,14 +1,4 @@
-# This is a list of pypi packages to be installed into virtualenv. Alternatively,
-# you can install these as RPMs instead of pypi packages. See the dependecies
-# with:
-# $ rpmspec -q --requires resultsdb.spec
-# $ rpmspec -q --buildrequires resultsdb.spec
-
-# A note for maintainers: Please keep this list in sync and in the same order
-# as the spec file.
-
-Flask >= 0.10.1
-iso8601 >= 0.1.11
-resultsdb_api >= 2.0
-six >= 1.10.0
+Flask >= 2.2.5
 cachelib
+iso8601 >= 0.1.11
+requests

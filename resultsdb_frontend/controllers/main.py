@@ -28,22 +28,15 @@ from flask import (
     request,
     url_for,
 )
-from resultsdb_api import ResultsDBapi, ResultsDBapiException
 
 from resultsdb_frontend import app
+from resultsdb_frontend.resultsdb_api import ResultsDBapi
 
 CACHE = SimpleCache()
 CACHE_TIMEOUT = 60
-
-RDB_API = None
+RDB_API = ResultsDBapi(app.config["RDB_URL"])
 
 main = Blueprint("main", __name__)
-
-
-@app.before_first_request
-def before_first_request():
-    global RDB_API
-    RDB_API = ResultsDBapi(app.config["RDB_URL"])
 
 
 @main.route("/")
@@ -80,19 +73,13 @@ def testcase_tokenizer():
 
 @main.route("/groups")
 def groups():
-    try:
-        groups = RDB_API.get_groups(**dict(request.args))
-    except ResultsDBapiException as e:
-        return str(e)
+    groups = RDB_API.get_groups(**dict(request.args))
     return render_template("groups.html", groups=groups)
 
 
 @main.route("/groups/<group_id>")
 def group(group_id):
-    try:
-        group = RDB_API.get_group(group_id)
-    except ResultsDBapiException as e:
-        return str(e)
+    group = RDB_API.get_group(group_id)
     groups = dict(prev=None, next=None, data=[group])
     return render_template("groups.html", groups=groups)
 
@@ -100,10 +87,7 @@ def group(group_id):
 @main.route("/results")
 def results():
     args = dict(request.args)
-    try:
-        results = RDB_API.get_results(**args)
-    except ResultsDBapiException as e:
-        return str(e)
+    results = RDB_API.get_results(**args)
     for result in results["data"]:
         result["groups"] = (len(result["groups"]), ",".join(result["groups"]))
     return render_template("results.html", results=results)
@@ -111,10 +95,7 @@ def results():
 
 @main.route("/results/<result_id>")
 def result(result_id):
-    try:
-        result = RDB_API.get_result(id=result_id)
-    except ResultsDBapiException as e:
-        return str(e)
+    result = RDB_API.get_result(id=result_id)
     try:
         result["groups"] = (len(result["groups"]), ",".join(result["groups"]))
     except KeyError:
@@ -131,9 +112,6 @@ def testcases():
 
 @main.route("/testcases/<path:testcase_name>")
 def testcase(testcase_name):
-    try:
-        tc = RDB_API.get_testcase(name=testcase_name)
-    except ResultsDBapiException as e:
-        return str(e)
+    tc = RDB_API.get_testcase(name=testcase_name)
     tcs = dict(prev=None, next=None, data=[tc])
     return render_template("testcases.html", testcases=tcs)

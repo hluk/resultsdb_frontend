@@ -1,7 +1,3 @@
-# This will produce an image to be used in Openshift
-# Build should be triggered from repo root like:
-# docker build -f Dockerfile --tag <IMAGE_TAG>
-
 FROM registry.fedoraproject.org/fedora-minimal:38
 
 ARG GITHUB_SHA
@@ -32,18 +28,16 @@ ENV \
 COPY . /opt/app-root/src/resultsdb_frontend/
 
 RUN microdnf -y install \
-        findutils \
         httpd \
         mod_ssl \
         python3-mod_wsgi \
         python3-pip \
-        python3-cachelib \
-        python3-flask \
-        python3-iso8601 \
-        python3-resultsdb_api \
         rpm-build \
+    && pip3 install --upgrade --upgrade-strategy eager \
+        -r /opt/app-root/src/resultsdb_frontend/requirements.txt \
+    && pip3 install --no-deps /opt/app-root/src/resultsdb_frontend \
+    && microdnf -y remove python3-pip \
     && microdnf -y clean all \
-    && pip3 install /opt/app-root/src/resultsdb_frontend \
     && install -d /usr/share/resultsdb_frontend/conf \
     && install -p -m 0644 \
         /opt/app-root/src/resultsdb_frontend/conf/resultsdb_frontend.conf \
