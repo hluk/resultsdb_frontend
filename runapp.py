@@ -26,9 +26,9 @@
 
 import resultsdb_frontend
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     resultsdb_frontend.app.run(
-        host=resultsdb_frontend.app.config['HOST'],
-        port=resultsdb_frontend.app.config['PORT'],
-        debug=resultsdb_frontend.app.config['DEBUG'],
+        host=resultsdb_frontend.app.config["HOST"],
+        port=resultsdb_frontend.app.config["PORT"],
+        debug=resultsdb_frontend.app.config["DEBUG"],
     )

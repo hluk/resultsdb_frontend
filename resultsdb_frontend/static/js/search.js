@@ -156,7 +156,7 @@ $('document').ready(function() {
         }
         if(outcome)
             url += "&outcome="+outcome;
-        
+
         url += "&since="+since;
 
         console.log(url);

@@ -20,23 +20,23 @@
 #   Ralph Bean <rbean@redhat.com>
 
 
-class Config(object):
+class Config:
     DEBUG = True
 
-    RDB_URL = 'http://localhost:5001/api/v2.0'
+    RDB_URL = "http://localhost:5001/api/v2.0"
 
-    LOGFILE = '/var/log/resultsdb_frontend/resultsdb_frontend.log'
+    LOGFILE = "/var/log/resultsdb_frontend/resultsdb_frontend.log"
     FILE_LOGGING = False
     SYSLOG_LOGGING = False
     STREAM_LOGGING = True
 
-    HOST = '0.0.0.0'
+    HOST = "127.0.0.1"
     PORT = 5002
 
     PRODUCTION = False
 
-    FEDMENU_URL = 'https://apps.fedoraproject.org/fedmenu'
-    FEDMENU_DATA_URL = 'https://apps.fedoraproject.org/js/data.js'
+    FEDMENU_URL = "https://apps.fedoraproject.org/fedmenu"
+    FEDMENU_DATA_URL = "https://apps.fedoraproject.org/js/data.js"
 
 
 class ProductionConfig(Config):
@@ -51,5 +51,5 @@ class DevelopmentConfig(Config):
 class TestingConfig(Config):
     TRAP_BAD_REQUEST_ERRORS = True
     TESTING = True
-    FEDMENU_URL = 'https://apps.stg.fedoraproject.org/fedmenu'
-    FEDMENU_DATA_URL = 'https://apps.stg.fedoraproject.org/js/data.js'
+    FEDMENU_URL = "https://apps.stg.fedoraproject.org/fedmenu"
+    FEDMENU_DATA_URL = "https://apps.stg.fedoraproject.org/js/data.js"
