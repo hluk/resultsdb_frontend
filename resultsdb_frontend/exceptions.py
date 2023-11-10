@@ -20,5 +20,6 @@
 # Authors:
 #   Frantisek Zatloukal <fzatlouk@redhat.com>
 
+
 class ContainerConfigIncompleteError(BaseException):
     pass
