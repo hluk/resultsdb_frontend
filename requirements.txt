@@ -1,4 +1,4 @@
 Flask >= 2.2.5
 cachelib
 iso8601 >= 0.1.11
-resultsdb_api >= 2.0
+requests

@@ -32,7 +32,6 @@ RUN microdnf -y install \
         mod_ssl \
         python3-mod_wsgi \
         python3-pip \
-        python3-resultsdb_api \
         rpm-build \
     && pip3 install --upgrade --upgrade-strategy eager \
         -r /opt/app-root/src/resultsdb_frontend/requirements.txt \

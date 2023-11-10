@@ -38,6 +38,9 @@ class Config:
     FEDMENU_URL = "https://apps.fedoraproject.org/fedmenu"
     FEDMENU_DATA_URL = "https://apps.fedoraproject.org/js/data.js"
 
+    # Options for outbound HTTP requests made by python-requests
+    REQUESTS_TIMEOUT = (6.1, 15)
+
 
 class ProductionConfig(Config):
     DEBUG = False
