@@ -34,16 +34,9 @@ from resultsdb_frontend import app
 
 CACHE = SimpleCache()
 CACHE_TIMEOUT = 60
-
-RDB_API = None
+RDB_API = ResultsDBapi(app.config["RDB_URL"])
 
 main = Blueprint("main", __name__)
-
-
-@app.before_first_request
-def before_first_request():
-    global RDB_API
-    RDB_API = ResultsDBapi(app.config["RDB_URL"])
 
 
 @main.route("/")
