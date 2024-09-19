@@ -70,38 +70,23 @@ $('document').ready(function() {
             $('#outcome option[value="'+item+'"]').attr('selected','selected');
         });
     }
-    if(qs.since){
-        dates = qs.since.split(',');
-        start = moment(dates[0], 'YYYY-MM-DD');
-        end = moment();
-        if (dates.length > 1){
-            end = moment(dates[1], 'YYYY-MM-DD');
-        }
-    }
-    else {
-        start = moment().subtract(29, 'days');
-        end = moment();
-    }
-    since = start.format('YYYY-MM-DD') + 'T00:00:00,' + end.format('YYYY-MM-DD') + 'T23:59:59';
 
-    $("#searchrange").daterangepicker({
-        startDate: start,
-        endDate: end,
-        ranges: {
-           'Today': [moment(), moment()],
-           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+    function date_range(since) {
+        if(since){
+            var dates = since.replace(' ', '').split(',', 2);
+            var start = moment(dates[0], 'YYYY-MM-DD');
+            var end = moment();
+            if (dates[1]){
+                end = moment(dates[1], 'YYYY-MM-DD');
+            }
+        }else{
+            var start = moment().subtract(29, 'days');
+            var end = moment();
         }
-    }, function(start, end, label) {
-        if (label === 'Custom Range'){
-            //$('#searchrange').val(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-            since = start.format('YYYY-MM-DD') + 'T00:00:00,' + end.format('YYYY-MM-DD') + 'T23:59:59';
-        }
-        else{
-            $('#searchrange').val(label);
-            since = start.format('YYYY-MM-DD') + 'T00:00:00,' + end.format('YYYY-MM-DD') + 'T23:59:59';
-        }
-    })
+        return [start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD')]
+    };
+    var range = date_range(qs.since);
+    $("#since").val(range[0] + ',' + range[1]);
 
     // Replace the submit button behaviour
     $("#searchform").submit(function(e){
@@ -111,6 +96,7 @@ $('document').ready(function() {
         var item = $.trim($("#item").val());
         var testcase = $.trim($("#testcase").val());
         var outcome = $("#outcome").val();
+        var since = $("#since").val();
 
         // split the string by whitespace or comma
         items = item.split(/[\s,]+/);
@@ -130,7 +116,7 @@ $('document').ready(function() {
         });
         // if the search contained any item value, add it to overall query url
         if(item_query){
-            url+='item:like='+item_query.slice(0, -1);
+            url+='item:like='+encodeURIComponent(item_query.slice(0, -1));
         }
 
         if(testcase != 0){
@@ -152,14 +138,15 @@ $('document').ready(function() {
             if(is_like){
                 url += ":like";
             }
-            url += "="+testcase;
+            url += "="+encodeURIComponent(testcase);
         }
         if(outcome)
-            url += "&outcome="+outcome;
+            url += "&outcome="+encodeURIComponent(outcome);
 
-        url += "&since="+since;
+        var range = date_range(since);
+        since = range[0] + 'T00:00:00,' + range[1] + 'T23:59:59';
+        url += "&since="+encodeURIComponent(since);
 
-        console.log(url);
-        window.location.href = encodeURI(url);
+        window.location.href = url;
     });
 });
