@@ -1,4 +1,4 @@
-FROM registry.fedoraproject.org/fedora-minimal:40
+FROM quay.io/fedora/python-313:20250101@sha256:dc3b9cf6de0ce9dca8b7eda0b353f7cfa15887e0bfe2015b2100f7d1aa368293
 
 ARG GITHUB_SHA
 LABEL \
@@ -27,17 +27,20 @@ ENV \
 
 COPY . /opt/app-root/src/resultsdb_frontend/
 
-RUN microdnf -y install \
+RUN dnf -y install \
+        --setopt install_weak_deps=false \
+        --nodocs \
+        --disablerepo=* \
+        --enablerepo=fedora,updates \
         httpd \
         mod_ssl \
         python3-mod_wsgi \
-        python3-pip \
         rpm-build \
     && pip3 install --upgrade --upgrade-strategy eager \
         -r /opt/app-root/src/resultsdb_frontend/requirements.txt \
     && pip3 install --no-deps /opt/app-root/src/resultsdb_frontend \
-    && microdnf -y remove python3-pip \
-    && microdnf -y clean all \
+    && dnf -y remove python3-pip \
+    && dnf -y clean all \
     && install -d /usr/share/resultsdb_frontend/conf \
     && install -p -m 0644 \
         /opt/app-root/src/resultsdb_frontend/conf/resultsdb_frontend.conf \
