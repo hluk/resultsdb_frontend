@@ -530,7 +530,18 @@ spec:
         value: $(tasks.build-image-index.results.IMAGE_URL)
       - name: IMAGE_DIGEST
         value: $(tasks.build-image-index.results.IMAGE_DIGEST)
+      - name: ADDITIONAL_TAGS
+        value:
+        # We need Renovate to update references to "*-stable" tagged stable images.
+        # Renovate treats the text after the first hyphen as a type of platform/compatibility indicator.
+        # See: https://docs.renovatebot.com/modules/versioning/docker/
+        - "$(tasks.clone-repository.results.commit-timestamp)-stable"
       runAfter:
+      - clair-scan
+      - clamav-scan
+      - rpms-signature-scan
+      - sast-shell-check
+      - sast-unicode-check
       - build-image-index
       taskRef:
         params:
