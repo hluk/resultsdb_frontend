@@ -6,7 +6,7 @@
     "group:all",
     ":gitSignOff",
     ":disableDependencyDashboard",
-    "schedule:weekly"
+    "schedule:monthly"
   ],
   "packageRules": [
     {
