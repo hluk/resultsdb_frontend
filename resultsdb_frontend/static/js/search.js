@@ -123,7 +123,7 @@ $('document').ready(function() {
             // split by whitespace or comma
             testcases = testcase.split(/[\s,]+/);
 
-            // check whethe like-search is necessary
+            // check whether like-search is necessary
             var is_like=false;
             testcases.forEach(function(testcase){
                 if(testcase.indexOf("*") != -1){
